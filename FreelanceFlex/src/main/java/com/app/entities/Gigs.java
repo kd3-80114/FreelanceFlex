@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "")
+@ToString(exclude = "freelancer")
 @Table(name = "gigs")
 public class Gigs extends BaseEntity{
 	
@@ -39,7 +39,7 @@ public class Gigs extends BaseEntity{
 	private CategoryType category;
 	
 	@ManyToOne
-	@JoinColumn(name = "freelancer_id",nullable = false)
+	@JoinColumn(name = "freelancer_id",nullable = true)
 	private Freelancer freelancer;
 	
 	
