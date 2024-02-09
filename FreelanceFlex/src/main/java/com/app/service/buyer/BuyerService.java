@@ -4,8 +4,10 @@ import com.app.dto.buyerdto.BuyerDTO;
 
 public interface BuyerService {
 
+	BuyerDTO addBuyer(BuyerDTO buyer);
+	
 	BuyerDTO findById(Long id);
 
-	BuyerDTO addBuyer(BuyerDTO buyer);
+	BuyerDTO updateBuyer(Long buyerid, BuyerDTO buyer);
 
 }
