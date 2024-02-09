@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.buyerdto.BuyerDTO;
+import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.service.buyer.BuyerService;
 
@@ -43,4 +44,15 @@ public class BuyerController {
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
+	
+	//2. place new order
+		// http://host:port/buyer/placeOrder , method=POST
+	@PostMapping("/placeOrder")
+	public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderDTO order) {
+		System.out.println("In add new order/post");
+		System.out.println(order);
+		PlaceOrderDTO finalResult =	buyerService.createNewOrder(order);
+		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);	
+	}
+	
 }

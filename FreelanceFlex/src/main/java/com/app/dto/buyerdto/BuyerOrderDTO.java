@@ -1,14 +1,15 @@
-package com.app.dto.freelancerdto;
+package com.app.dto.buyerdto;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @Setter
 @ToString
-public class FreelancerGigsDTO {
+public class BuyerOrderDTO {
 	@NotNull
 	private Long id;
 }

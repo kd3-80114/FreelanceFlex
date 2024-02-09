@@ -1,5 +1,7 @@
 package com.app.service.buyer;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -8,19 +10,27 @@ import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dto.buyerdto.BuyerDTO;
+import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
+import com.app.entities.Gigs;
+import com.app.entities.Orders;
 import com.app.dao.BuyerDao;
+import com.app.dao.OrderDao;
 
 @Service
 @Transactional
 public class BuyerServiceImpl implements BuyerService {
 
 	@Autowired
+	private ModelMapper mapper;
+	@Autowired
 	private BuyerDao buyerDao;
 	@Autowired
-	private ModelMapper mapper;
+	private OrderDao orderDao;
+	
 	@Override
 	public BuyerDTO findById(Long id) {
 		
@@ -30,6 +40,7 @@ public class BuyerServiceImpl implements BuyerService {
 				("Buyer with given id does not exist")),
 				BuyerDTO.class) ;	
 		}
+	
 	@Override
 	public BuyerDTO addBuyer(BuyerDTO buyer) {
 		
@@ -39,7 +50,41 @@ public class BuyerServiceImpl implements BuyerService {
 		} catch (Exception e) {
 			return null;
 		}
-		} 
-		
+	}
 	
+	@Override
+	public PlaceOrderDTO createNewOrder(PlaceOrderDTO order) {
+		// to get current time
+		LocalDateTime currentTime = LocalDateTime.now();
+		
+		System.out.println(order.toString());
+		Integer duration = order.getGigToOrder().getDeliveryTime();
+		
+		Orders newOrder = mapper.map(order,Orders.class);
+		// as new order gigs and freelancer is not mapped so it is null
+		// we will need to create them manually
+		Freelancer newFreelancer = mapper.map(order.getGigToOrder().getFreelancer(),Freelancer.class);
+		newOrder.setFreelancer(newFreelancer);
+		
+		Gigs newGig = mapper.map(order.getGigToOrder(),Gigs.class);
+		newOrder.setGigs(newGig);
+		
+		// setting buyer information in new order from above PlaceOrderDTO order
+		newOrder.getBuyer().setId(order.getBuyer().getId());
+		
+		System.out.println(newOrder.getBuyer().toString());
+		System.out.println(newOrder.getBuyer().toString());
+		System.out.println(newOrder.getBuyer().toString());
+		
+		// setting Gigs information in new order from above PlaceOrderDTO order
+		newOrder.setAmount(order.getGigToOrder().getPrice());
+		newOrder.setStartDate(currentTime);
+		newOrder.setDeliveryDate(currentTime.plusDays(duration));
+		
+		// setting freelancer information in new order from above PlaceOrderDTO order
+		newOrder.getGigs().setId(order.getGigToOrder().getId());
+		newOrder.getFreelancer().setId(order.getGigToOrder().getFreelancer().getId());
+
+		return mapper.map(orderDao.save(newOrder),PlaceOrderDTO.class);
+	} 	
 }
