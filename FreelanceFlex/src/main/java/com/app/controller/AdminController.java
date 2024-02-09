@@ -16,13 +16,13 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	@GetMapping("/viewProfile")
-	public ResponseEntity<?> viewProfile(@RequestParam Long id, @RequestParam String email, @RequestParam String Role)
-	{	
+	public ResponseEntity<?> viewProfile(@RequestParam Long id, @RequestParam String email, @RequestParam String Role) {
 		System.out.println(id);
 
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
-	
+	/// git testinhg
+
 }
