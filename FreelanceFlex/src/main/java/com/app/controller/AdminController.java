@@ -24,5 +24,5 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
 	/// git testinhg
-
+	// testing part 2
 }
