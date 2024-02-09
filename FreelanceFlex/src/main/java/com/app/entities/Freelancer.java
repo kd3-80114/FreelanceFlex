@@ -22,7 +22,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "permanentAddress")
+@ToString(exclude = "permanentAddress,gigs")
 @Table(name = "freelancer")
 public class Freelancer extends BaseEntity{
 	

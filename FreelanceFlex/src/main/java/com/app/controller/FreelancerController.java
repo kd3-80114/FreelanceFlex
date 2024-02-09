@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.dto.freelancerdto.GigDTO;
 import com.app.service.freelancer.FreelanceService;
 
 @RestController
@@ -40,6 +42,21 @@ public class FreelancerController {
 		System.out.println("In add new Freelancer/post");
 		System.out.println(freelancer);
 		FreelancerDTO finalResult =	freelancerService.addFreelancer(freelancer);
+		System.out.println(finalResult);
+		if (finalResult != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
+		}
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
+	}
+	//2.Create gig .
+	//http://host:port/freelancer/creategig,method=POST
+	@PostMapping("/createGig")
+	public  ResponseEntity<?> createNewGig(@RequestBody GigDTO gig)
+	{
+		
+		System.out.println("In add new Freelancer/post/CreateGIg");
+		System.out.println(gig.getFreelancer().getId());
+		GigDTO finalResult =	freelancerService.addNewGig(gig);
 		System.out.println(finalResult);
 		if (finalResult != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
