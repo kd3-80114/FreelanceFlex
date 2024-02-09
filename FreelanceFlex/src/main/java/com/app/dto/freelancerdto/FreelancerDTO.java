@@ -1,0 +1,55 @@
+package com.app.dto.freelancerdto;
+import javax.validation.constraints.NotBlank;
+
+import com.app.dto.AddressDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+
+@Getter
+@Setter
+@ToString
+	public class FreelancerDTO {
+		
+		@JsonProperty(access = Access.READ_ONLY)
+		private Long id;
+		
+		@NotBlank(message = "name can not be blank")
+		private String firstName;
+
+		@NotBlank(message = "name can not be blank")
+		private String lastName;
+		
+		@NotBlank(message = "email can not be blank")
+		private String email;
+		
+		@NotBlank(message = "contactNo can not be blank")
+		private String contactNo;
+		
+		@NotBlank(message = "description can not be blank")
+		private String description;
+		
+		private byte [] profilePicture; 
+
+		@JsonProperty(access = Access.READ_ONLY)
+		final private String role = "FREELANCER";
+		
+		@JsonIgnore
+		private boolean isBlocked=false;
+		
+		@NotBlank(message = "permanentAddress can not be blank")
+		private AddressDTO permanentAddress;
+		
+		@NotBlank(message = "skills can not be blank")
+		private SkillsDTO skills;
+		
+
+		
+	}
+
