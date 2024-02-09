@@ -1,5 +1,7 @@
 package com.app.dto.freelancerdto;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.app.dto.AddressDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +29,13 @@ import lombok.ToString;
 		private String lastName;
 		
 		@NotBlank(message = "email can not be blank")
+		@Email(message="Invalid email format")
 		private String email;
+//		
+//		@NotBlank(message = "password can not be blank")
+//		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
+//		,message = "Invalid password")
+//		private String password;
 		
 		@NotBlank(message = "contactNo can not be blank")
 		private String contactNo;
@@ -48,6 +56,7 @@ import lombok.ToString;
 		
 		@NotBlank(message = "skills can not be blank")
 		private SkillsDTO skills;
+		
 		
 
 		
