@@ -33,7 +33,7 @@ public class Gigs extends BaseEntity{
 	@Column(length =1000)
 	private String description;
 	
-	private double price;
+	private double price;		
 	
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
