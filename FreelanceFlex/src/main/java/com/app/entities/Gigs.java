@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringExclude;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +27,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "freelancer")
+@ToString
 @Table(name = "gigs")
 public class Gigs extends BaseEntity{
 	
@@ -43,6 +47,8 @@ public class Gigs extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
 	
+	@JsonIgnore
+	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name = "freelancer_id",nullable = true)
 	private Freelancer freelancer;
