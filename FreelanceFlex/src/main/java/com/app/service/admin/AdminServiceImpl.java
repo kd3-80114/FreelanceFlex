@@ -53,11 +53,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Freelancer findFreelancerByEmail(String email) {
 		Freelancer freelancer=freelancerdao.findByEmail(email);
-	//	freelancer.getGigs().size();
-//		freelancer.getFreelancerReview().size();
-//		freelancer.getFreelancerPayment().size();
-//		freelancer.getFreelanceIssues().size();
-//		freelancer.getFreelancerOrders().size();
+		freelancer.getGigs().size();
+		freelancer.getFreelancerReview().size();
+		freelancer.getFreelancerPayment().size();
+		freelancer.getFreelanceIssues().size();
+		freelancer.getFreelancerOrders().size();
 		return freelancer;
 	}
 }
