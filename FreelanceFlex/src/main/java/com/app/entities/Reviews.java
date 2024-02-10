@@ -35,11 +35,11 @@ public class Reviews extends BaseEntity{
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "freelancer_id",nullable = false)
+	@JoinColumn(name = "freelancer_id",nullable = true)
 	private Freelancer freelancer;
 	
 	@ManyToOne
-	@JoinColumn(name = "buyer_id",nullable = false)
+	@JoinColumn(name = "buyer_id",nullable = true)
 	private Buyer buyer;
 	
 	

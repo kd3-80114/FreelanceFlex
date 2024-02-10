@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -33,7 +36,7 @@ public class BuyerController {
 	//2. add new buyer
 	// http://host:port/buyer , method=POST
 	@PostMapping 
-	public ResponseEntity<?> addNewBuyer(@RequestBody BuyerDTO buyer)
+	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
 		System.out.println("In add new Buyer/post");
 		System.out.println(buyer);
@@ -45,6 +48,45 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
 	
+
+	
+	//3. update buyer
+	// http://host:port/buyer , method=PUT
+	
+	@PutMapping("/{buyerId}")
+	public ResponseEntity<?>updateBuyer(@PathVariable Long buyerId, @RequestBody BuyerDTO buyer)
+	{
+		System.out.println("In update Buyer");
+		System.out.println();
+		
+		BuyerDTO retrived = buyerService.updateBuyer(buyerId,buyer);
+		if(retrived !=null )
+		{
+
+			return ResponseEntity.status(HttpStatus.OK).body(retrived);
+		}
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(retrived);
+		
+	}
+		
+	//4.Buyer reviews a freelancer
+	// http://host:port/buyer , method=PUT
+	
+	@PostMapping("/{freelanceId}/{buyerId}")
+	public ResponseEntity<?>addReview(@PathVariable Long freelanceId,@PathVariable Long buyerId,@RequestBody ReviewsDTO review )
+	{
+		ReviewsDTO reviewed = buyerService.addReview(freelanceId,buyerId,review);
+		
+		if(reviewed !=null ) 
+		{
+
+			return ResponseEntity.status(HttpStatus.OK).body(reviewed);
+		}
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(reviewed);
+		
+	}
+		
+
 	//2. place new order
 		// http://host:port/buyer/placeOrder , method=POST
 	@PostMapping("/placeOrder")
@@ -56,3 +98,4 @@ public class BuyerController {
 	}
 	
 }
+

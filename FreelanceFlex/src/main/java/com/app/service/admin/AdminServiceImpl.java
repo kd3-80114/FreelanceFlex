@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
+import com.app.dao.AdminDao;
 import com.app.dto.admindto.AdminDTO;
 
 @Service
