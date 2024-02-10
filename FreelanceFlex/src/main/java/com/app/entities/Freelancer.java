@@ -10,6 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import com.app.dto.AddressDTO;
 
@@ -24,7 +25,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "permanentAddress,gigs")
+ //@ToString(exclude = "permanentAddress,gigs,freelancerReview,freelancerOrders,freelanceIssues,skills,signin")
 @Table(name = "freelancer")
 public class Freelancer extends BaseEntity{
 	
@@ -49,46 +50,42 @@ public class Freelancer extends BaseEntity{
 	@Column
 	private boolean isBlocked=false;
 	
-	
+	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "freelancerAddress",nullable = true)
 	//@MapsId
 	private Address permanentAddress;
-	
+	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	//@MapsId
 	private Skills skills;
 	
-
+	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
 	private List <Gigs> gigs = new ArrayList<>();
 	
-	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Reviews> freelancerReview = new ArrayList<>();
 	
-	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Payment> freelancerPayment = new ArrayList<>();
 	
-	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Orders> freelancerOrders = new ArrayList<>();
 	
-	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Issues> freelanceIssues = new ArrayList<>();
 	
-	
+	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	//@MapsId
 	private SignIn signin;
-	
-
-	
-
 }
 
 
