@@ -15,13 +15,15 @@ public interface BuyerService {
 
 	BuyerDTO updateBuyer(Long buyerId, BuyerDTO buyer);
 
-	//ReviewsDTO addReview(Long freelanceId,Long buyerId,ReviewsDTO review);
+	ReviewsDTO addReview(Long freelanceId,Long buyerId,ReviewsDTO review);
 
 	PlaceOrderDTO createNewOrder(PlaceOrderDTO order);
 
 	List<ReviewsDTO> getAllReviews(Long buyerId);
 
 	List<Orders> getOrderDetails(Long buyerId);
+
+	
 
 
 }

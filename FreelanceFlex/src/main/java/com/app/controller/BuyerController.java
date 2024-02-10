@@ -105,6 +105,7 @@ public class BuyerController {
 	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
+	}
 
 	@GetMapping("/viewOrders/{buyerId}")
 	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
