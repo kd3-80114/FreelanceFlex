@@ -1,8 +1,13 @@
 package com.app.service.buyer;
 
 import java.time.LocalDateTime;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.transaction.Transactional;
 
@@ -96,6 +101,7 @@ public class BuyerServiceImpl implements BuyerService {
 		
 		return mapper.map(updatedBuyer, BuyerDTO.class);
 	}
+
 	@Override
 	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
 		try {
@@ -115,6 +121,7 @@ public class BuyerServiceImpl implements BuyerService {
 		}
 
 	}
+
 	
 	@Override
 	public PlaceOrderDTO createNewOrder(PlaceOrderDTO order) {
@@ -158,6 +165,19 @@ public class BuyerServiceImpl implements BuyerService {
 		return returnOrder;
 	}
 
+
+ 	
+	public List<ReviewsDTO> getAllReviews(Long buyerId) {
+	    // Assuming you have a method in reviewDao to retrieve reviews by buyerId
+	    List<Reviews> reviews = reviewDao.findByBuyerId(buyerId);
+	    // Mapping Reviews objects to ReviewsDTO
+	    List<ReviewsDTO> reviewsDTOList = reviews.stream()
+	            .map(review -> mapper.map(review, ReviewsDTO.class))
+	            .collect(Collectors.toList());
+
+	    return reviewsDTOList;
+	}
+
 	@Override
 	public List<Orders> getOrderDetails(Long buyerId) {
 		// NOT WORKING PROPERLY ------------------------------
@@ -169,6 +189,7 @@ public class BuyerServiceImpl implements BuyerService {
 	
 	return finalOrderList;			
 	} 	
+
 }
 
 
