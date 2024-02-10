@@ -35,7 +35,8 @@ public class FreelanceServiceImpl implements FreelanceService {
 	@Autowired
 	private GigDao gigDao;
 	@Override
-	public FreelancerDTO findById(Long id) {
+	public FreelancerDTO findById(Long id) 
+	{
 		
 		return mapper.map(freelancerDao.findById(id)
 				.orElseThrow(()->

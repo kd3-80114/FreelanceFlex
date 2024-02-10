@@ -103,7 +103,7 @@ public class BuyerServiceImpl implements BuyerService {
 		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
 			reviewCreated.setFreelancer(freelancer);
 			
-			Buyer buyer =  reviewDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
+			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
 			reviewCreated.setBuyer(buyer);
 			System.out.println(reviewCreated);
 			return mapper.map(reviewCreated, ReviewsDTO.class);
@@ -170,6 +170,8 @@ public class BuyerServiceImpl implements BuyerService {
 	return finalOrderList;			
 	} 	
 }
+
+
 
 
 
