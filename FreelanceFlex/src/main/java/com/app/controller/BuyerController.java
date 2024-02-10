@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.service.buyer.BuyerService;
@@ -34,7 +35,7 @@ public class BuyerController {
 	//2. add new buyer
 	// http://host:port/buyer , method=POST
 	@PostMapping 
-	public ResponseEntity<?> addNewBuyer(@RequestBody BuyerDTO buyer)
+	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
 		System.out.println("In add new Buyer/post");
 		System.out.println(buyer);
@@ -50,13 +51,13 @@ public class BuyerController {
 	//3. update buyer
 	// http://host:port/buyer , method=PUT
 	
-	@PutMapping("/{buyerid}")
-	public ResponseEntity<?>updateBuyer(@PathVariable Long buyerid, @RequestBody BuyerDTO buyer)
+	@PutMapping("/{buyerId}")
+	public ResponseEntity<?>updateBuyer(@PathVariable Long buyerId, @RequestBody BuyerDTO buyer)
 	{
 		System.out.println("In update Buyer");
 		System.out.println();
 		
-		BuyerDTO retrived = buyerService.updateBuyer(buyerid,buyer);
+		BuyerDTO retrived = buyerService.updateBuyer(buyerId,buyer);
 		if(retrived !=null )
 		{
 
@@ -66,4 +67,37 @@ public class BuyerController {
 		
 	}
 	
+	
+	
+	//4.Buyer reviews a freelancer
+	// http://host:port/buyer , method=PUT
+	
+	@PostMapping("/{freelanceId}/{buyerId}")
+	public ResponseEntity<?>addReview(@PathVariable Long freelanceId,@PathVariable Long buyerId,@RequestBody ReviewsDTO review )
+	{
+		ReviewsDTO reviewed = buyerService.addReview(freelanceId,buyerId,review);
+		
+		if(reviewed !=null ) 
+		{
+
+			return ResponseEntity.status(HttpStatus.OK).body(reviewed);
+		}
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(reviewed);
+		
+	}
+		
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

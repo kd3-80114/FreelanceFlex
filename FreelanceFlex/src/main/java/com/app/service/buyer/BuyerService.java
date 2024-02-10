@@ -1,5 +1,6 @@
 package com.app.service.buyer;
 
+import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 
 public interface BuyerService {
@@ -8,6 +9,8 @@ public interface BuyerService {
 	
 	BuyerDTO findById(Long id);
 
-	BuyerDTO updateBuyer(Long buyerid, BuyerDTO buyer);
+	BuyerDTO updateBuyer(Long buyerId, BuyerDTO buyer);
+
+	ReviewsDTO addReview(Long freelanceId,Long buyerId,ReviewsDTO review);
 
 }
