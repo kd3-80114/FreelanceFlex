@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
+
 import com.app.dao.BuyerDao;
 import com.app.dao.FreelancerDao;
+
+import com.app.dao.AdminDao;
+
 import com.app.dto.admindto.AdminDTO;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
