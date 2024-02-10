@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,24 +51,29 @@ public class Buyer extends BaseEntity{
 	@Column
 	private boolean isBlocked=false;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "buyerAddress",nullable = false)
 	//@MapsId somechanges done here
 	private Address permanentAddress;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Reviews> buyerReview = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Payment> buyerPayment = new ArrayList<>();
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Orders> buyerOrders = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Issues> buyerIssues = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	private SignIn signin;
