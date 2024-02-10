@@ -75,19 +75,19 @@ public class BuyerController {
 	//4.Buyer reviews a freelancer
 	// http://host:port/buyer , method=PUT
 	
-	@PostMapping("/{freelanceId}/{buyerId}")
-	public ResponseEntity<?>addReview(@PathVariable Long freelanceId,@PathVariable Long buyerId,@RequestBody ReviewsDTO review )
-	{
-		ReviewsDTO reviewed = buyerService.addReview(freelanceId,buyerId,review);
-		
-		if(reviewed !=null ) 
-		{
-
-			return ResponseEntity.status(HttpStatus.OK).body(reviewed);
-		}
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(reviewed);
-		
-	}
+//	@PostMapping("/{freelanceId}/{buyerId}")
+//	public ResponseEntity<?>addReview(@PathVariable Long freelanceId,@PathVariable Long buyerId,@RequestBody ReviewsDTO review )
+//	{
+//		ReviewsDTO reviewed = buyerService.addReview(freelanceId,buyerId,review);
+//		
+//		if(reviewed !=null ) 
+//		{
+//
+//			return ResponseEntity.status(HttpStatus.OK).body(reviewed);
+//		}
+//		return ResponseEntity.status(HttpStatus.CONFLICT).body(reviewed);
+//		
+//	}
 		
 
 	//2. place new order
@@ -100,6 +100,12 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);	
 	}
 	
+
+	@GetMapping("/{buyerId}")
+	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
+		System.out.println("In  view Reviews");	
+		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
+
 	@GetMapping("/viewOrders/{buyerId}")
 	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
 		List<Orders> finalOrderList =	buyerService.getOrderDetails(buyerId);
@@ -108,6 +114,7 @@ public class BuyerController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
 		
+
 	}
 	
 }
