@@ -31,6 +31,11 @@ import lombok.ToString;
 		@NotBlank(message = "email can not be blank")
 		@Email(message="Invalid email format")
 		private String email;
+//		
+//		@NotBlank(message = "password can not be blank")
+//		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
+//		,message = "Invalid password")
+//		private String password;
 		
 		@NotBlank(message = "password can not be blank")
 		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
@@ -56,6 +61,7 @@ import lombok.ToString;
 		
 		@NotBlank(message = "skills can not be blank")
 		private SkillsDTO skills;
+		
 		
 
 		

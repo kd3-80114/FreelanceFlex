@@ -30,4 +30,5 @@ public class ReviewsDTO {
 	@Max(value = 5)
 	private int rating;
 
+
 }

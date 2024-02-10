@@ -29,10 +29,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = "permanentAddress")
 @Table(name = "buyer")
-
 public class Buyer extends BaseEntity{
 	
-
 	@Column(name = "fname",length = 50)
 	private String firstName;
 	@Column(name = "lname",length = 50)

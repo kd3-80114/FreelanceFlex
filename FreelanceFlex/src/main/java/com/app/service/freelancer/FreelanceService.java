@@ -2,11 +2,17 @@ package com.app.service.freelancer;
 
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.dto.freelancerdto.GigDTO;
 
 public interface FreelanceService {
 
 	FreelancerDTO findById(Long id);
 	FreelancerDTO addFreelancer(FreelancerDTO freelancer);
 	
+
+	FreelancerDTO updateFreelancer(Long freelanceId,FreelancerDTO freelancer);
+
+	GigDTO addNewGig(GigDTO gig);
+
 
 }
