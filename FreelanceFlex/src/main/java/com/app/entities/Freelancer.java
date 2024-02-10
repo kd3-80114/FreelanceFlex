@@ -91,10 +91,13 @@ public class Freelancer extends BaseEntity{
 	private List<Orders> freelancerOrders = new ArrayList<>();
 	
 
+
 	@JsonIgnore
 	@ToString.Exclude	
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Issues> freelanceIssues = new ArrayList<>();
+
+
 	
 	@JsonIgnore
 	@ToString.Exclude
