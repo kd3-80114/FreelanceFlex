@@ -1,5 +1,7 @@
 package com.app.service.admin;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -10,12 +12,13 @@ import com.app.custom_exceptions.ResourceNotFoundException;
 
 import com.app.dao.BuyerDao;
 import com.app.dao.FreelancerDao;
-
+import com.app.dao.OrderDao;
 import com.app.dao.AdminDao;
 
 import com.app.dto.admindto.AdminDTO;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
+import com.app.entities.Orders;
 
 @Service
 @Transactional
@@ -29,6 +32,8 @@ public class AdminServiceImpl implements AdminService{
 	private BuyerDao buyerdao;
 	@Autowired
 	private FreelancerDao freelancerdao;
+	@Autowired
+	private OrderDao orderDao;
 	
 	@Override
 	public AdminDTO findById(Long id) {	
@@ -66,7 +71,31 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public String deleteFreelancer(Long freelancerId) {
 		freelancerdao.deleteById(freelancerId);
-		return null;
+		return "Successfully deleted";
 	}
 
+	@Override
+	public String deleteBuyer(Long buyerId) {
+		buyerdao.deleteById(buyerId);
+		return "Successfully deleted";
+	}
+
+	@Override
+	public List<Orders> getFreelancerOrders(Long freelancerId) {
+		List<Orders> finalOrderList = orderDao.findAllOrderByFreelancerId(freelancerId);
+		return finalOrderList;
+	}
+
+	@Override
+	public List<Orders> getBuyerOrders(Long buyerId) {
+		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
+		return finalOrderList;
+	}
+
+	@Override
+	public String getFreelancer(Long freelancerId) {
+		Freelancer freelancer = freelancerdao.findById(freelancerId).orElseThrow(()-> new ResourceNotFoundException("Freelancer Not Found"));
+		freelancer.setBlocked(true);
+		return "Blocked";
+	}
 }

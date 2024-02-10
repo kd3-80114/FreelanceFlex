@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.entities.Orders;
 import com.app.service.admin.AdminService;
 
 @RestController
@@ -51,4 +54,46 @@ public class AdminController {
 	}
 	
 
+	@DeleteMapping("/deleteBuyer/{buyerId}")
+	public ResponseEntity<?> deleteBuyer(@PathVariable Long buyerId){
+		System.out.println("in delete buyer");
+		System.out.println(buyerId);
+		return ResponseEntity.status(HttpStatus.OK).body(adminService.deleteBuyer(buyerId));
+	}
+	
+	@GetMapping("/viewFreelancerOrders/{freelancerId}")
+	public ResponseEntity<?> getFreelancerOrders(@PathVariable Long freelancerId){
+		System.out.println("in admin view order freelancer");
+		System.out.println(freelancerId);
+		
+		List<Orders> finalOrderList =	adminService.getFreelancerOrders(freelancerId);
+		if (finalOrderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
+	}
+	
+	@GetMapping("/viewBuyerOrders/{buyerId}")
+	public ResponseEntity<?> getBuyerOrders(@PathVariable Long buyerId){
+		System.out.println("in admin view order buyer");
+		System.out.println(buyerId);
+		
+		List<Orders> finalOrderList = adminService.getBuyerOrders(buyerId);
+		if (finalOrderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
+	}
+	
+	@GetMapping("/blockFreelancer/{freelancerId}")
+	public ResponseEntity<?> blockFreelancer(@PathVariable Long freelancerId){
+		System.out.println("in admin block freelancer");
+		System.out.println(freelancerId);
+		
+		String finalResult = adminService.getFreelancer(freelancerId);
+		if (finalResult == "Blocked") {
+			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);
+	}
 }

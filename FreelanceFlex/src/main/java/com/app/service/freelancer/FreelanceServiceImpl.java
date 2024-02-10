@@ -45,6 +45,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 	private ModelMapper mapper;
 	@Autowired
 	private GigDao gigDao;
+	
 	@Override
 	public FreelancerDTO findById(Long id) 
 	{
@@ -55,6 +56,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 				("Freelancer with given id does not exist")),
 				FreelancerDTO.class) ; 
 	}
+	
 	@Override
 	public FreelancerDTO addFreelancer(FreelancerDTO freelancer) {
 		try {
@@ -66,8 +68,8 @@ public class FreelanceServiceImpl implements FreelanceService {
 		return null;
 
 	}
+	
 	@Override
-
 	public FreelancerDTO updateFreelancer(Long freelanceId ,FreelancerDTO freelancer) {
 		Freelancer freelancerUpdated = freelancerDao.findById(freelanceId).orElseThrow(() -> new ResourceNotFoundException("Invalid Dept Id!!!"));
 		freelancerUpdated.setFirstName(freelancer.getFirstName());
@@ -95,12 +97,12 @@ public class FreelanceServiceImpl implements FreelanceService {
 		return mapper.map(freelancerUpdated,FreelancerDTO.class);
 	}
 
-
 	public GigDTO addNewGig(GigDTO gig) {
 			Gigs newGig = mapper.map(gig,Gigs.class);
 			newGig.getFreelancer().setId(gig.getFreelancer().getId());	
 			return mapper.map(gigDao.save(newGig),GigDTO.class);
 	}
+	
 	@Override
 
 	public List<ReviewsDTO> getAllReviews(Long freelancerId) {
