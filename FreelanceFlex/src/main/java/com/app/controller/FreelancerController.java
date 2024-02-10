@@ -80,14 +80,19 @@ public class FreelancerController {
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
-	
+
+	@GetMapping("/{freelancerId}")
+	public ResponseEntity<?> viewReview(@PathVariable Long freelancerId) {
+		System.out.println("In  view Reviews");	
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllReviews(freelancerId));	
+
+	}
 	@GetMapping("/viewOrders/{freelancerId}")
 	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId){
 		List<Orders> finalOrderList =	freelancerService.getOrderDetails(freelancerId);
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
-		
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);	
 	}
 }
