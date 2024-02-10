@@ -10,6 +10,9 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.app.dto.AddressDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -83,10 +86,9 @@ public class Freelancer extends BaseEntity{
 	//@MapsId
 	private SignIn signin;
 	
-	
-	
-	}
 
+	
 
+}
 
 

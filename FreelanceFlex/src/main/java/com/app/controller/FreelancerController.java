@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,4 +65,16 @@ public class FreelancerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
 	
+	@PutMapping("/{freelanceId}")
+	public  ResponseEntity<?> updateFreelance(@PathVariable Long freelanceId,@RequestBody FreelancerDTO freelancer)
+	{
+		System.out.println("In update Freelancer/put");
+		System.out.println(freelancer);
+		FreelancerDTO finalResult =	freelancerService.updateFreelancer(freelanceId,freelancer);
+		System.out.println(finalResult);
+		if (finalResult != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
+		}
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
+	}
 }

@@ -5,7 +5,8 @@
 	import javax.persistence.Column;
 	import javax.validation.constraints.NotBlank;
 
-	import com.fasterxml.jackson.annotation.JsonProperty;
+import com.app.entities.Address;
+import com.fasterxml.jackson.annotation.JsonProperty;
 	import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 	import lombok.Getter;
@@ -30,6 +31,10 @@
 		private String landmark;
 		@NotBlank(message = "pincode can not be blank")
 		private String pincode;
+		
+		public Address  getPermanentAddress(Address address) {
+			return address;
+		}
 		
 	}
 
