@@ -1,6 +1,8 @@
 package com.app.service.buyer;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -94,27 +96,27 @@ public class BuyerServiceImpl implements BuyerService {
 		
 		return mapper.map(updatedBuyer, BuyerDTO.class);
 	}
-	@Override
-	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
-
-	
-		try {
-		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
-		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
-			reviewCreated.setFreelancer(freelancer);
-			
-			Buyer buyer =  reviewDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
-			reviewCreated.setBuyer(buyer);
-			System.out.println(reviewCreated);
-			return mapper.map(reviewCreated, ReviewsDTO.class);
-	
-		}catch (Exception e) 
-		{
-			System.out.println("before null");
-			return null;
-		}
-
-	}
+//	@Override
+//	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
+//
+//	
+//		try {
+//		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
+//		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
+//			reviewCreated.setFreelancer(freelancer);
+//			
+//			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
+//			reviewCreated.setBuyer(buyer);
+//			System.out.println(reviewCreated);
+//			return mapper.map(reviewCreated, ReviewsDTO.class);
+//	
+//		}catch (Exception e) 
+//		{
+//			System.out.println("before null");
+//			return null;
+//		}
+//
+//	}
 	
 	@Override
 	public PlaceOrderDTO createNewOrder(PlaceOrderDTO order) {
@@ -156,7 +158,19 @@ public class BuyerServiceImpl implements BuyerService {
 		PlaceOrderDTO returnOrder = mapper.map(orderDao.save(newOrder),PlaceOrderDTO.class);
 		returnOrder.setGigToOrder(order.getGigToOrder());
 		return returnOrder;
-	} 	
+	}
+
+ 	
+	public List<ReviewsDTO> getAllReviews(Long buyerId) {
+	    // Assuming you have a method in reviewDao to retrieve reviews by buyerId
+	    List<Reviews> reviews = reviewDao.findByBuyerId(buyerId);
+	    // Mapping Reviews objects to ReviewsDTO
+	    List<ReviewsDTO> reviewsDTOList = reviews.stream()
+	            .map(review -> mapper.map(review, ReviewsDTO.class))
+	            .collect(Collectors.toList());
+
+	    return reviewsDTOList;
+	}
 }
 
 
