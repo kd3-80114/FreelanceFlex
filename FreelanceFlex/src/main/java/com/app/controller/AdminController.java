@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,20 @@ public class AdminController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
-	/// git testinhg
-	// testing part 2
+	@PostMapping("/findBuyerProfile")
+	public ResponseEntity<?> findBuyerProfileByEmail(@RequestParam String email)
+	{
+		System.out.println("Inside findProfile by email of Buyer");
+		System.out.println(email);
+		return ResponseEntity.status(HttpStatus.OK).body(adminService.findBuyerByEmail(email));
+		
+	}
+	@PostMapping("/findFreelancerProfile")
+	public ResponseEntity<?> findFreelancerProfileByEmail(@RequestParam String email)
+	{
+		System.out.println("Inside findProfile by email of Freelancer");
+		System.out.println(email);
+		return ResponseEntity.status(HttpStatus.OK).body(adminService.findFreelancerByEmail(email));
+		
+	}
 }
