@@ -1,4 +1,6 @@
 package com.app.service.freelancer;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,8 @@ import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
 
 import com.app.dto.buyerdto.BuyerDTO;
-
 import com.app.dao.GigDao;
-
+import com.app.dao.OrderDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
 
 import com.app.entities.Address;
@@ -19,6 +20,7 @@ import com.app.entities.Skills;
 import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.Freelancer;
 import com.app.entities.Gigs;
+import com.app.entities.Orders;
 
 @Service
 @Transactional
@@ -26,6 +28,8 @@ public class FreelanceServiceImpl implements FreelanceService {
 
 	@Autowired
 	private FreelancerDao freelancerDao;
+	@Autowired
+	private OrderDao orderDao;
 	@Autowired
 	private ModelMapper mapper;
 	@Autowired
@@ -85,6 +89,12 @@ public class FreelanceServiceImpl implements FreelanceService {
 			newGig.getFreelancer().setId(gig.getFreelancer().getId());	
 			return mapper.map(gigDao.save(newGig),GigDTO.class);
 	}
+	@Override
+	public List<Orders> getOrderDetails(Long freelancerId) {
+		List<Orders> finalOrderList = orderDao.findAllOrderByFreelancerId(freelancerId);
+		return finalOrderList;
+	}
+
 
 }
 

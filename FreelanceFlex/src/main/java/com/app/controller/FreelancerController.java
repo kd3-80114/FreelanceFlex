@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.dto.freelancerdto.GigDTO;
+import com.app.entities.Orders;
 import com.app.service.freelancer.FreelanceService;
 
 @RestController
@@ -76,5 +79,15 @@ public class FreelancerController {
 			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
+	}
+	
+	@GetMapping("/viewOrders/{freelancerId}")
+	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId){
+		List<Orders> finalOrderList =	freelancerService.getOrderDetails(freelancerId);
+		if (finalOrderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
+		
 	}
 }

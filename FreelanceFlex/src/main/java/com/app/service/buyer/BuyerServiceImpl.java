@@ -1,11 +1,14 @@
 package com.app.service.buyer;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
@@ -156,6 +159,18 @@ public class BuyerServiceImpl implements BuyerService {
 		PlaceOrderDTO returnOrder = mapper.map(orderDao.save(newOrder),PlaceOrderDTO.class);
 		returnOrder.setGigToOrder(order.getGigToOrder());
 		return returnOrder;
+	}
+
+	@Override
+	public List<Orders> getOrderDetails(Long buyerId) {
+		// NOT WORKING PROPERLY ------------------------------
+//		List<Orders> orderList =orderDao.findOrdersByBuyerIdNative(buyerId);
+		
+//	List<Orders> finalOrderList = new ArrayList<>();
+//	List<Orders> orderList = orderDao.findAll();
+		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
+	
+	return finalOrderList;			
 	} 	
 }
 
