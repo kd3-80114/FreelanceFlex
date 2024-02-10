@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
+
+import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dao.GigDao;
 import com.app.dao.OrderDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -95,3 +97,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 
 
 }
+
+
+
+

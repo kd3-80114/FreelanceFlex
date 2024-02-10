@@ -1,7 +1,6 @@
 package com.app.service.freelancer;
-
 import java.util.List;
-
+import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.Orders;
