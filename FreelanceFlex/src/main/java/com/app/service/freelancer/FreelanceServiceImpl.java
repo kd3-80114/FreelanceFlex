@@ -1,6 +1,8 @@
 package com.app.service.freelancer;
 import java.util.List;
+
 import java.util.stream.Collectors;
+
 
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -10,9 +12,9 @@ import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
-
 import com.app.dao.GigDao;
 import com.app.dao.ReviewDao;
+import com.app.dao.OrderDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
 
 import com.app.entities.Address;
@@ -23,7 +25,11 @@ import com.app.entities.Skills;
 import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.Freelancer;
 import com.app.entities.Gigs;
+
 import com.app.entities.Reviews;
+
+import com.app.entities.Orders;
+
 
 @Service
 @Transactional
@@ -34,11 +40,14 @@ public class FreelanceServiceImpl implements FreelanceService {
 	@Autowired
 	private FreelancerDao freelancerDao;
 	@Autowired
+	private OrderDao orderDao;
+	@Autowired
 	private ModelMapper mapper;
 	@Autowired
 	private GigDao gigDao;
 	@Override
-	public FreelancerDTO findById(Long id) {
+	public FreelancerDTO findById(Long id) 
+	{
 		
 		return mapper.map(freelancerDao.findById(id)
 				.orElseThrow(()->
@@ -93,6 +102,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 			return mapper.map(gigDao.save(newGig),GigDTO.class);
 	}
 	@Override
+
 	public List<ReviewsDTO> getAllReviews(Long freelancerId) {
 		  // Assuming you have a method in reviewDao to retrieve reviews by freelancerId
 	    List<Reviews> reviews = reviewDao.findByfreelancerId(freelancerId);
@@ -103,6 +113,12 @@ public class FreelanceServiceImpl implements FreelanceService {
 	            .collect(Collectors.toList());
 		return reviewsDTOList;
 	}
+
+	public List<Orders> getOrderDetails(Long freelancerId) {
+		List<Orders> finalOrderList = orderDao.findAllOrderByFreelancerId(freelancerId);
+		return finalOrderList;
+	}
+
 
 }
 

@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.entities.Orders;
 import com.app.service.buyer.BuyerService;
 
 @RestController
@@ -97,11 +100,21 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);	
 	}
 	
+
 	@GetMapping("/{buyerId}")
 	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
+
+	@GetMapping("/viewOrders/{buyerId}")
+	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
+		List<Orders> finalOrderList =	buyerService.getOrderDetails(buyerId);
+		if (finalOrderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
+		
+
 	}
 	
 }
-

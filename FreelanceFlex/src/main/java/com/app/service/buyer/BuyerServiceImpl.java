@@ -1,13 +1,19 @@
 package com.app.service.buyer;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
@@ -43,7 +49,6 @@ public class BuyerServiceImpl implements BuyerService {
 	private BuyerDao buyerDao;
 	@Autowired 
 	private FreelancerDao freelancerDao;
-
 	@Autowired 
 	private ReviewDao reviewDao;
 	@Autowired
@@ -96,27 +101,27 @@ public class BuyerServiceImpl implements BuyerService {
 		
 		return mapper.map(updatedBuyer, BuyerDTO.class);
 	}
-//	@Override
-//	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
-//
-//	
-//		try {
-//		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
-//		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
-//			reviewCreated.setFreelancer(freelancer);
-//			
-//			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
-//			reviewCreated.setBuyer(buyer);
-//			System.out.println(reviewCreated);
-//			return mapper.map(reviewCreated, ReviewsDTO.class);
-//	
-//		}catch (Exception e) 
-//		{
-//			System.out.println("before null");
-//			return null;
-//		}
-//
-//	}
+
+	@Override
+	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
+		try {
+		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
+		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
+			reviewCreated.setFreelancer(freelancer);
+			
+			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
+			reviewCreated.setBuyer(buyer);
+			System.out.println(reviewCreated);
+			return mapper.map(reviewCreated, ReviewsDTO.class);
+	
+		}catch (Exception e) 
+		{
+			System.out.println("before null");
+			return null;
+		}
+
+	}
+
 	
 	@Override
 	public PlaceOrderDTO createNewOrder(PlaceOrderDTO order) {
@@ -160,6 +165,7 @@ public class BuyerServiceImpl implements BuyerService {
 		return returnOrder;
 	}
 
+
  	
 	public List<ReviewsDTO> getAllReviews(Long buyerId) {
 	    // Assuming you have a method in reviewDao to retrieve reviews by buyerId
@@ -171,7 +177,22 @@ public class BuyerServiceImpl implements BuyerService {
 
 	    return reviewsDTOList;
 	}
+
+	@Override
+	public List<Orders> getOrderDetails(Long buyerId) {
+		// NOT WORKING PROPERLY ------------------------------
+//		List<Orders> orderList =orderDao.findOrdersByBuyerIdNative(buyerId);
+		
+//	List<Orders> finalOrderList = new ArrayList<>();
+//	List<Orders> orderList = orderDao.findAll();
+		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
+	
+	return finalOrderList;			
+	} 	
+
 }
+
+
 
 
 

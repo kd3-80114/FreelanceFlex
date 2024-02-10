@@ -8,6 +8,6 @@ import com.app.entities.Buyer;
 
 public interface BuyerDao extends JpaRepository<Buyer, Long> {
 
+	Buyer findByEmail(String email);
 
-	
 }
