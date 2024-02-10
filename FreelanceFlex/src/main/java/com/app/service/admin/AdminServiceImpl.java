@@ -21,7 +21,6 @@ import com.app.entities.Freelancer;
 @Transactional
 public class AdminServiceImpl implements AdminService{
 	
-	
 	@Autowired
 	private ModelMapper mapper;
 	@Autowired
@@ -30,19 +29,18 @@ public class AdminServiceImpl implements AdminService{
 	private BuyerDao buyerdao;
 	@Autowired
 	private FreelancerDao freelancerdao;
+	
 	@Override
-	public AdminDTO findById(Long id) {
-		
-		return mapper.map(admindao.findById(id)
+	public AdminDTO findById(Long id) {	
+	return mapper.map(admindao.findById(id)
 				.orElseThrow(()->
 				new ResourceNotFoundException
 				("Admin with given id does not exist")),
 				AdminDTO.class) ;	
-		}
+	}
+	
 	@Override
 	public Buyer findBuyerByEmail(String email) {
-   
-		
 		Buyer buyer=buyerdao.findByEmail(email);
 		buyer.getBuyerReview().size();
 		buyer.getBuyerPayment().size();
@@ -50,6 +48,7 @@ public class AdminServiceImpl implements AdminService{
 		buyer.getBuyerIssues().size();
 		return buyer;
 	}
+	
 	@Override
 	public Freelancer findFreelancerByEmail(String email) {
 		Freelancer freelancer=freelancerdao.findByEmail(email);
@@ -59,5 +58,11 @@ public class AdminServiceImpl implements AdminService{
 		freelancer.getFreelanceIssues().size();
 		freelancer.getFreelancerOrders().size();
 		return freelancer;
+	}
+	
+	@Override
+	public String deleteFreelancer(Long freelancerId) {
+		freelancerdao.deleteById(freelancerId);
+		return null;
 	}
 }

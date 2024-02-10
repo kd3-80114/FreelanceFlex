@@ -28,7 +28,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Table(name = "freelancer")
 public class Freelancer extends BaseEntity{
 	
@@ -62,7 +61,6 @@ public class Freelancer extends BaseEntity{
 
 	
 	@JsonIgnore
-
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
@@ -70,21 +68,18 @@ public class Freelancer extends BaseEntity{
 	private Skills skills;
 
 	@JsonIgnore
-
 	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
 	private List <Gigs> gigs = new ArrayList<>();
 	
 
 	@JsonIgnore
-
 	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Reviews> freelancerReview = new ArrayList<>();
 	
 
 	@JsonIgnore
-
 	@ToString.Exclude
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Payment> freelancerPayment = new ArrayList<>();
@@ -96,15 +91,15 @@ public class Freelancer extends BaseEntity{
 	private List<Orders> freelancerOrders = new ArrayList<>();
 	
 
-	@ToString.Exclude
+
+	@JsonIgnore
+	@ToString.Exclude	
 	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Issues> freelanceIssues = new ArrayList<>();
-	
 
-	
+
 	
 	@JsonIgnore
-
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
