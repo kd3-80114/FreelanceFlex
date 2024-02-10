@@ -96,4 +96,15 @@ public class AdminController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);
 	}
+	@GetMapping("/blockBuyer/{buyerId}")
+	public ResponseEntity<?> blockBuyer(@PathVariable Long buyerId){
+		System.out.println("in admin block freelancer");
+		System.out.println(buyerId);
+		
+		String finalResult = adminService.getBuyer(buyerId);
+		if (finalResult == "Blocked") {
+			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);
+	}
 }

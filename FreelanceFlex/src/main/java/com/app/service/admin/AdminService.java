@@ -25,4 +25,7 @@ public interface AdminService {
 
 	String getFreelancer(Long freelancerId);
 
+
+	String getBuyer(Long buyerId);
+
 }
