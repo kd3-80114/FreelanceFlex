@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.app.dto.AddressDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,6 +72,10 @@ public class Buyer extends BaseEntity{
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	private SignIn signin;
+
+	
+		
+	
 	}
 
 

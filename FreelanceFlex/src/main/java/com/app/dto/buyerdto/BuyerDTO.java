@@ -31,10 +31,6 @@ public class BuyerDTO  {
 	private String contactNo;
 	@NotBlank(message = "description can not be blank")
 	private String description;
-	@NotBlank(message = "password can not be blank")
-	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
-	,message = "Invalid password")
-	private String password;
 	private byte [] profilePicture;
 	@JsonProperty(access = Access.READ_ONLY)
 	final private String role = "BUYER";
