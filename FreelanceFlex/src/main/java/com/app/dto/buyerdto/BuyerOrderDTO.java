@@ -10,6 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BuyerOrderDTO {
+	
 	@NotNull
 	private Long id;
+	@NotNull
+	private String email;
 }

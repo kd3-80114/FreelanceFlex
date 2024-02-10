@@ -61,6 +61,7 @@ public class BuyerServiceImpl implements BuyerService {
 		Integer duration = order.getGigToOrder().getDeliveryTime();
 		
 		Orders newOrder = mapper.map(order,Orders.class);
+		
 		// as new order gigs and freelancer is not mapped so it is null
 		// we will need to create them manually
 		Freelancer newFreelancer = mapper.map(order.getGigToOrder().getFreelancer(),Freelancer.class);
@@ -69,11 +70,12 @@ public class BuyerServiceImpl implements BuyerService {
 		Gigs newGig = mapper.map(order.getGigToOrder(),Gigs.class);
 		newOrder.setGigs(newGig);
 		
+		Buyer buyer =	buyerDao.findById(order.getBuyer().getId())
+						.orElseThrow(()-> new ResourceNotFoundException("Not Found"));
+//		Buyer buyer = mapper.map(order.getBuyer(),Buyer.class);
+//		buyer.setId(order.getBuyerOrder().getId());
 		// setting buyer information in new order from above PlaceOrderDTO order
-		newOrder.getBuyer().setId(order.getBuyer().getId());
-		
-		System.out.println(newOrder.getBuyer().toString());
-		System.out.println(newOrder.getBuyer().toString());
+		newOrder.setBuyer(buyer);
 		System.out.println(newOrder.getBuyer().toString());
 		
 		// setting Gigs information in new order from above PlaceOrderDTO order
@@ -84,7 +86,11 @@ public class BuyerServiceImpl implements BuyerService {
 		// setting freelancer information in new order from above PlaceOrderDTO order
 		newOrder.getGigs().setId(order.getGigToOrder().getId());
 		newOrder.getFreelancer().setId(order.getGigToOrder().getFreelancer().getId());
-
-		return mapper.map(orderDao.save(newOrder),PlaceOrderDTO.class);
+//		newOrder.getBuyer().setId(order.getBuyer().getId());
+//		newOrder.getBuyer().setEmail(order.getBuyer().getEmail());
+		
+		PlaceOrderDTO returnOrder = mapper.map(orderDao.save(newOrder),PlaceOrderDTO.class);
+		returnOrder.setGigToOrder(order.getGigToOrder());
+		return returnOrder;
 	} 	
 }

@@ -21,7 +21,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = "")
 @Table(name = "orders")
-
 public class Orders extends BaseEntity{
 	
 	private double amount;
