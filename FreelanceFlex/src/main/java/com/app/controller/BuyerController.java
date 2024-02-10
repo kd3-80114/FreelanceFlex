@@ -68,9 +68,7 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(retrived);
 		
 	}
-	
-	
-	
+		
 	//4.Buyer reviews a freelancer
 	// http://host:port/buyer , method=PUT
 	
@@ -88,9 +86,6 @@ public class BuyerController {
 		
 	}
 		
-}
-	
-	
 
 	//2. place new order
 		// http://host:port/buyer/placeOrder , method=POST
