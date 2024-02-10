@@ -41,3 +41,6 @@ public class Orders extends BaseEntity{
 	@JoinColumn(name = "gigs_id",nullable = false)
 	private Gigs gigs;
 }
+
+
+

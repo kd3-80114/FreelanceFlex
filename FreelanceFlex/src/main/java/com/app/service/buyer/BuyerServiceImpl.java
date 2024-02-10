@@ -41,7 +41,6 @@ public class BuyerServiceImpl implements BuyerService {
 	private BuyerDao buyerDao;
 	@Autowired 
 	private FreelancerDao freelancerDao;
-
 	@Autowired 
 	private ReviewDao reviewDao;
 	@Autowired
@@ -96,8 +95,6 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 	@Override
 	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
-
-	
 		try {
 		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
 		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
