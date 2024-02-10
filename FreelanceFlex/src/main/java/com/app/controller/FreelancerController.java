@@ -87,7 +87,6 @@ public class FreelancerController {
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
-		
+		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);	
 	}
 }
