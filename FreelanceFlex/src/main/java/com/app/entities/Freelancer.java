@@ -20,12 +20,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "permanentAddress")
+@ToString(exclude = "permanentAddress,gigs")
 @Table(name = "freelancer")
 public class Freelancer extends BaseEntity{
 	

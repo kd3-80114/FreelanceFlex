@@ -1,17 +1,21 @@
 package com.app.service.freelancer;
-
 import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
+import com.app.dao.GigDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
+
 import com.app.entities.Address;
 import com.app.entities.Freelancer;
 import com.app.entities.Skills;
+
+import com.app.dto.freelancerdto.GigDTO;
+import com.app.entities.Freelancer;
+import com.app.entities.Gigs;
+
 @Service
 @Transactional
 public class FreelanceServiceImpl implements FreelanceService {
@@ -20,6 +24,8 @@ public class FreelanceServiceImpl implements FreelanceService {
 	private FreelancerDao freelancerDao;
 	@Autowired
 	private ModelMapper mapper;
+	@Autowired
+	private GigDao gigDao;
 	@Override
 	public FreelancerDTO findById(Long id) {
 		
@@ -27,7 +33,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 				.orElseThrow(()->
 				new ResourceNotFoundException
 				("Freelancer with given id does not exist")),
-				FreelancerDTO.class) ;
+				FreelancerDTO.class) ; 
 	}
 	@Override
 	public FreelancerDTO addFreelancer(FreelancerDTO freelancer) {
@@ -41,6 +47,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 
 	}
 	@Override
+
 	public FreelancerDTO updateFreelancer(Long freelanceId ,FreelancerDTO freelancer) {
 		Freelancer freelancerUpdated = freelancerDao.findById(freelanceId).orElseThrow(() -> new ResourceNotFoundException("Invalid Dept Id!!!"));
 		freelancerUpdated.setFirstName(freelancer.getFirstName());
@@ -68,5 +75,11 @@ public class FreelanceServiceImpl implements FreelanceService {
 		return mapper.map(freelancerUpdated,FreelancerDTO.class);
 	}
 
+
+	public GigDTO addNewGig(GigDTO gig) {
+			Gigs newGig = mapper.map(gig,Gigs.class);
+			newGig.getFreelancer().setId(gig.getFreelancer().getId());	
+			return mapper.map(gigDao.save(newGig),GigDTO.class);
+	}
 
 }
