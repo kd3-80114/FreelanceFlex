@@ -28,6 +28,7 @@ import com.app.entities.Gigs;
 import com.app.entities.Orders;
 import com.app.dao.BuyerDao;
 import com.app.dao.OrderDao;
+import com.app.dao.ReviewDao;
 
 
 @Service
@@ -40,12 +41,10 @@ public class BuyerServiceImpl implements BuyerService {
 	private BuyerDao buyerDao;
 	@Autowired 
 	private FreelancerDao freelancerDao;
-	@Autowired
 
-	private ModelMapper mapper;
 	@Autowired 
 	private ReviewDao reviewDao;
-
+	@Autowired
 	private OrderDao orderDao;
 	
 
@@ -159,6 +158,9 @@ public class BuyerServiceImpl implements BuyerService {
 		return returnOrder;
 	} 	
 }
+
+
+
 
 
 
