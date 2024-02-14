@@ -28,7 +28,7 @@ public class SecurityConfig {
 	@Autowired
 	private JwtAuthenticationFilter jwtFilter;
 	//dep : custom auth entry point
-	@Autowired
+	@Autowired 
 	private CustomAuthenticationEntryPoint authEntry;	 
 	
 	
@@ -47,7 +47,10 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.OPTIONS).permitAll() // Allow pre-flight requests for JS clients
             .antMatchers("/freelancer/**","/buyer/viewProfile").hasRole("FREELANCER")
             .antMatchers("/buyer/**","/freelancer/viewProfile").hasRole("BUYER")
-            .antMatchers("/buyer/**","/freelancer/**","/admin/**").hasRole("ADMIN")
+//            .antMatchers("/buyer/**","/buyer/viewProfile","/freelancer/**","/admin/**").hasRole("ADMIN")
+            .antMatchers("/freelancer/viewProfile","/freelancer/viewReview/**","/freelancer/viewOrders/**",
+            		"/buyer/viewProfile","/buyer/viewReview/**","/buyer/viewOrders/**",
+            		"/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
         .and()
         .sessionManagement()

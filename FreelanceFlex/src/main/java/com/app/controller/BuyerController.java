@@ -126,6 +126,15 @@ public class BuyerController {
 	public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderDTO order) {
 		System.out.println("In add new order/post");
 		System.out.println(order);
+		PlaceOrderDTO finalResult =	buyerService.createNewOrder(order);
+		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);	
+	}
+	
+
+	@GetMapping("/viewReview/{buyerId}")
+	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
+		System.out.println("In  view Reviews");	
+		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
 		PlaceOrderDTO finalResult = buyerService.createNewOrder(order);
 		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);
 	}
