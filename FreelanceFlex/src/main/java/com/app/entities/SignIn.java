@@ -1,4 +1,5 @@
 package com.app.entities;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,12 +17,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = "password")
 @Table(name = "signIn")
-public class SignIn extends BaseEntity{	
+public class SignIn extends BaseEntity {
 	@Column(length = 50)
 	private String email;
-	@Column(length = 300,nullable = false)
+	@Column(length = 300, nullable = false)
 	private String password;
-	@Enumerated(EnumType.STRING) 
+	@Enumerated(EnumType.STRING)
 	private RoleType userRole;
-
 }

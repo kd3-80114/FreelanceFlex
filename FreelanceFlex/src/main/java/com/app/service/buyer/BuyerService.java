@@ -15,29 +15,33 @@ import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
+import com.app.entities.Gigs;
 import com.app.entities.Orders;
 
 public interface BuyerService {
 
 	BuyerDTO addBuyer(BuyerDTO buyer);
-	
+
 	BuyerDTO findById(Long id);
 
 	BuyerDTO updateBuyer(Long buyerId, BuyerDTO buyer);
 
-	ReviewsDTO addReview(Long freelanceId,Long buyerId,ReviewsDTO review);
+	ReviewsDTO addReview(Long freelanceId, Long buyerId, ReviewsDTO review);
 
 	PlaceOrderDTO createNewOrder(PlaceOrderDTO order);
 
 	List<ReviewsDTO> getAllReviews(Long buyerId);
-	ApiResponse uploadImage(Long id, MultipartFile image)throws IOException;
+
+	ApiResponse uploadImage(Long id, MultipartFile image) throws IOException;
+
 	public byte[] serveImageOfbuyer(long id);
 
 	List<Orders> getOrderDetails(Long buyerId);
 
-	PaymentDTO addPayment(Long freelanceId,Long buyerId,PaymentDTO payment);
+	List<Gigs> getAllGigs(Long freelancerId);
+
+	PaymentDTO addPayment(Long freelanceId, Long buyerId, PaymentDTO payment);
 
 	List<PaymentDTO> getAllPayments(Long buyerId);
-	
 
 }
