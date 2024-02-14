@@ -46,6 +46,7 @@ public class FreelancerController {
 	FreelancerDao freelancerDao;
 
 	@GetMapping("/viewProfile")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER' )")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)
 	// (@RequestParam /*@Valid*/ FreelancerProfileDTO freelancer)
 	{
@@ -62,10 +63,12 @@ public class FreelancerController {
 	// 1. add new freelancer
 	// http://host:port/freelancer , method=POST
 	@PostMapping("/signUp")
-	public ResponseEntity<?> addNewFreelance(@RequestBody FreelancerDTO freelancer) {
-		// freelancer.getSignIn().setEmail(freelancer.getEmail());
-		// freelancer.getSignIn().setPassword(freelancer.getPassword());
-		// freelancer.getSignIn().setRole(RoleType.FREELANCER);
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
+	public  ResponseEntity<?> addNewFreelance(@RequestBody FreelancerDTO freelancer)
+	{
+//		freelancer.getSignIn().setEmail(freelancer.getEmail());
+//		freelancer.getSignIn().setPassword(freelancer.getPassword());
+//		freelancer.getSignIn().setRole(RoleType.FREELANCER);
 		System.out.println("In add new Freelancer/post");
 		System.out.println("freelancer signIN dto=" + freelancer.getSignIn());
 		System.out.println("freelancer=" + freelancer);
@@ -80,8 +83,10 @@ public class FreelancerController {
 	// 2.Create gig .
 	// http://host:port/freelancer/creategig,method=POST
 	@PostMapping("/createGig")
-	public ResponseEntity<?> createNewGig(@RequestBody GigDTO gig) {
-
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
+	public  ResponseEntity<?> createNewGig(@RequestBody GigDTO gig)
+	{
+		
 		System.out.println("In add new Freelancer/post/CreateGIg");
 		System.out.println(gig.getFreelancer().getId());
 		GigDTO finalResult = freelancerService.addNewGig(gig);
@@ -93,7 +98,9 @@ public class FreelancerController {
 	}
 
 	@PutMapping("/{freelanceId}")
-	public ResponseEntity<?> updateFreelance(@PathVariable Long freelanceId, @RequestBody FreelancerDTO freelancer) {
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
+	public  ResponseEntity<?> updateFreelance(@PathVariable Long freelanceId,@RequestBody FreelancerDTO freelancer)
+	{
 		System.out.println("In update Freelancer/put");
 		System.out.println(freelancer);
 		FreelancerDTO finalResult = freelancerService.updateFreelancer(freelanceId, freelancer);
@@ -104,7 +111,9 @@ public class FreelancerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
 
-	@GetMapping("/viewReviews/{freelancerId}")
+
+	@GetMapping("/viewReview/{freelancerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER')")
 	public ResponseEntity<?> viewReview(@PathVariable Long freelancerId) {
 		System.out.println("In  view Reviews");
 		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllReviews(freelancerId));
@@ -119,8 +128,9 @@ public class FreelancerController {
 	}
 
 	@GetMapping("/viewOrders/{freelancerId}")
-	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId) {
-		List<Orders> finalOrderList = freelancerService.getOrderDetails(freelancerId);
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER')")
+	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId){
+		List<Orders> finalOrderList =	freelancerService.getOrderDetails(freelancerId);
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
@@ -128,6 +138,7 @@ public class FreelancerController {
 	}
 
 	@GetMapping("viewGigs/{freelancerId}")
+		@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")
 	public ResponseEntity<?> viewGigs(@PathVariable Long freelancerId) {
 		List<Gigs> freelancerGigs = freelancerService.getAllGigs(freelancerId);
 
@@ -136,6 +147,7 @@ public class FreelancerController {
 
 	// uploadImage
 	@PostMapping(value = "/images/{freelancerId}", consumes = "multipart/form-data")
+			@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	public ResponseEntity<?> uploadImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image)
 			throws IOException {
 		System.out.println("In upload image " + freelancerId);
@@ -145,6 +157,7 @@ public class FreelancerController {
 
 	// 7. download image
 	// http://host:port/employees/images/{empId} , method=GET
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	@GetMapping(value = "/images/{freelancerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
 	public ResponseEntity<?> downloadImage(@PathVariable long freelancerId) throws IOException {
 		System.out.println("in download image " + freelancerId);

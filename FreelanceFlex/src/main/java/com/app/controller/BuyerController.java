@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,7 @@ public class BuyerController {
 	// @Autowired
 
 	@GetMapping("/viewProfile")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
 	public ResponseEntity<?> viewProfile(@RequestParam Long id) {
 		System.out.println(id);
 
@@ -48,9 +50,11 @@ public class BuyerController {
 
 	// 2. add new buyer
 	// http://host:port/buyer , method=POST
-	@PostMapping("/signUp")
-	public ResponseEntity<?> addNewBuyer(@RequestBody BuyerDTO buyer) {
-
+	@PostMapping("/signUp") 
+	@PreAuthorize("hasRole('ROLE_BUYER')")
+	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
+	{
+		
 		System.out.println("In add new Buyer/post");
 		System.out.println(buyer);
 		// return
@@ -64,9 +68,11 @@ public class BuyerController {
 
 	// 3. update buyer
 	// http://host:port/buyer , method=PUT
-
-	@PutMapping("/updateBuyer/{buyerId}")
-	public ResponseEntity<?> updateBuyer(@PathVariable Long buyerId, @RequestBody BuyerDTO buyer) {
+	
+	@PutMapping("/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
+	public ResponseEntity<?>updateBuyer(@PathVariable Long buyerId, @RequestBody BuyerDTO buyer)
+	{
 		System.out.println("In update Buyer");
 		System.out.println();
 
@@ -83,6 +89,7 @@ public class BuyerController {
 	// http://host:port/buyer , method=PUT
 
 	@PostMapping("/review/{freelanceId}/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> addReview(@PathVariable Long freelanceId, @PathVariable Long buyerId,
 			@RequestBody ReviewsDTO review) {
 		ReviewsDTO reviewed = buyerService.addReview(freelanceId, buyerId, review);
@@ -96,6 +103,7 @@ public class BuyerController {
 	}
 
 	@GetMapping("/viewReview/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_BUYER','ROLE_ADMIN' )")
 	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
 		System.out.println("In  view Reviews");
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));
@@ -104,6 +112,7 @@ public class BuyerController {
 	// Buyer does payment to a freelancer
 	// // http://host:port/buyer , method=PUT
 	@PostMapping("/payment/{freelanceId}/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> addPayment(@PathVariable Long freelanceId, @PathVariable Long buyerId,
 			@RequestBody PaymentDTO payment) {
 		System.out.println("In the addPayment");
@@ -115,6 +124,7 @@ public class BuyerController {
 	}
 
 	@GetMapping("/viewPayments/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_BUYER','ROLE_ADMIN' )")
 	public ResponseEntity<?> viewPayments(@PathVariable Long buyerId) {
 		System.out.println("In viewPayments");
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllPayments(buyerId));
@@ -123,16 +133,28 @@ public class BuyerController {
 	// 4. place new order
 	// http://host:port/buyer/placeOrder , method=POST
 	@PostMapping("/placeOrder")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderDTO order) {
 		System.out.println("In add new order/post");
 		System.out.println(order);
+		PlaceOrderDTO finalResult =	buyerService.createNewOrder(order);
+		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);	
+	}
+	
+
+	@GetMapping("/viewReview/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
+	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
+		System.out.println("In  view Reviews");	
+		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
 		PlaceOrderDTO finalResult = buyerService.createNewOrder(order);
 		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);
 	}
 
 	@GetMapping("/viewOrders/{buyerId}")
-	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId) {
-		List<Orders> finalOrderList = buyerService.getOrderDetails(buyerId);
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
+	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
+		List<Orders> finalOrderList =	buyerService.getOrderDetails(buyerId);
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
@@ -142,6 +164,7 @@ public class BuyerController {
 
 	// uploadImage
 	@PostMapping(value = "/images/{buyerId}", consumes = "multipart/form-data")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> uploadImage(@PathVariable Long buyerId, @RequestParam MultipartFile image)
 			throws IOException {
 		System.out.println("in upload image " + buyerId);
@@ -150,12 +173,14 @@ public class BuyerController {
 
 	// downloadImage
 	@GetMapping(value = "/images/{buyerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> downloadImage(@PathVariable long buyerId) throws IOException {
 		System.out.println("in download image " + buyerId);
 		return ResponseEntity.ok(buyerService.serveImageOfbuyer(buyerId));
 	}
 
 	@GetMapping("viewGigs/{freelancerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
 	public ResponseEntity<?> viewGigs(@PathVariable Long freelancerId) {
 		List<Gigs> freelancerGigs = buyerService.getAllGigs(freelancerId);
 

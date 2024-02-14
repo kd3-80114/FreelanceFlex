@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,20 +25,23 @@ public class AdminController {
 	private AdminService adminService;
 
 	@GetMapping("/viewProfile")
-	public ResponseEntity<?> viewProfile(@RequestParam Long id, @RequestParam String email, @RequestParam String Role) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> viewProfile(@RequestParam Long id) {
 		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
 	
 	@PostMapping("/findBuyerProfile")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> findBuyerProfileByEmail(@RequestParam String email)
 	{
-		System.out.println("Inside findProfile by email of Buyer");
+		System.out.println("Inside findProfile by email of Buyer"); 
 		System.out.println(email);
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findBuyerByEmail(email));	
 	}
 	
 	@PostMapping("/findFreelancerProfile")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> findFreelancerProfileByEmail(@RequestParam String email)
 	{
 		System.out.println("Inside findProfile by email of Freelancer");
@@ -46,6 +50,7 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/deleteFreelancer/{freelancerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteFreelancer(@PathVariable Long freelancerId){
 		System.out.println("in delete freelancer");
 		System.out.println(freelancerId);
@@ -54,6 +59,7 @@ public class AdminController {
 	
 
 	@DeleteMapping("/deleteBuyer/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteBuyer(@PathVariable Long buyerId){
 		System.out.println("in delete buyer");
 		System.out.println(buyerId);
@@ -61,6 +67,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/viewFreelancerOrders/{freelancerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getFreelancerOrders(@PathVariable Long freelancerId){
 		System.out.println("in admin view order freelancer");
 		System.out.println(freelancerId);
@@ -73,6 +80,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/viewBuyerOrders/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getBuyerOrders(@PathVariable Long buyerId){
 		System.out.println("in admin view order buyer");
 		System.out.println(buyerId);
@@ -85,6 +93,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/blockFreelancer/{freelancerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> blockFreelancer(@PathVariable Long freelancerId){
 		System.out.println("in admin block freelancer");
 		System.out.println(freelancerId);
@@ -96,7 +105,9 @@ public class AdminController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);
 	}
+	
 	@GetMapping("/blockBuyer/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> blockBuyer(@PathVariable Long buyerId){
 		System.out.println("in admin block freelancer");
 		System.out.println(buyerId);
