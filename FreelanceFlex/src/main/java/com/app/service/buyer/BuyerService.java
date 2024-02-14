@@ -2,6 +2,8 @@ package com.app.service.buyer;
 import java.util.List;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+
+import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
@@ -23,7 +25,9 @@ public interface BuyerService {
 
 	List<Orders> getOrderDetails(Long buyerId);
 
-	
+	PaymentDTO addPayment(Long freelanceId,Long buyerId,PaymentDTO payment);
 
+	List<PaymentDTO> getAllPayments(Long buyerId);
+	
 
 }

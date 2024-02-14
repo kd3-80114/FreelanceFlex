@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "freelancer,buyer")
+@ToString(exclude = {"freelancer","buyer"})
 @Table(name = "reviews")
 public class Reviews extends BaseEntity{
 	
@@ -35,11 +35,11 @@ public class Reviews extends BaseEntity{
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "freelancer_id",nullable = true)
+	@JoinColumn(name = "freelancer_id",nullable = false)
 	private Freelancer freelancer;
 	
 	@ManyToOne
-	@JoinColumn(name = "buyer_id",nullable = true)
+	@JoinColumn(name = "buyer_id",nullable = false)
 	private Buyer buyer;
 	
 	

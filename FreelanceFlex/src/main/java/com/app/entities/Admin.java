@@ -45,7 +45,6 @@ public class Admin extends BaseEntity{
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
-	
 	private SignIn signin;
 	
 	@OneToMany(mappedBy = "admin",cascade = CascadeType.ALL,orphanRemoval = true)
