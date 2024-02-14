@@ -2,6 +2,7 @@ package com.app.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import com.app.entities.RoleType;
 
 
@@ -12,5 +13,5 @@ public class LoginResponseDTO {
 	
 		private String email;
 	
-		private RoleType role;
+		private RoleType userRole;
 }

@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import com.app.dto.AddressDTO;
+import com.app.dto.SignInDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -31,16 +32,11 @@ import lombok.ToString;
 		@NotBlank(message = "email can not be blank")
 		@Email(message="Invalid email format")
 		private String email;
-//		
-//		@NotBlank(message = "password can not be blank")
-//		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
-//		,message = "Invalid password")
-//		private String password;
 		
-//		@NotBlank(message = "password can not be blank")
-//		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
-//		,message = "Invalid password")
-//		private String password;
+		@NotBlank(message = "password can not be blank")
+		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
+		,message = "Invalid password")
+		private String password;
 		
 		@NotBlank(message = "contactNo can not be blank")
 		private String contactNo;
@@ -51,7 +47,7 @@ import lombok.ToString;
 		private byte [] profilePicture; 
 
 		@JsonProperty(access = Access.READ_ONLY)
-		final private String role = "FREELANCER";
+		final private String role = "ROLE_FREELANCER";
 		
 		@JsonIgnore
 		private boolean isBlocked=false;
@@ -62,8 +58,9 @@ import lombok.ToString;
 		@NotBlank(message = "skills can not be blank")
 		private SkillsDTO skills;
 		
-		
-
-		
+		@JsonIgnore
+		@JsonProperty(access = Access.READ_ONLY)
+		@NotBlank
+		private SignInDTO signIn;	
 	}
 

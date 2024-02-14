@@ -2,19 +2,29 @@ package com.app.service.buyer;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.custom_exceptions.ApiException;
 import com.app.custom_exceptions.ResourceNotFoundException;
+import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
+import com.app.dto.SignInDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -24,6 +34,8 @@ import com.app.entities.ApiResponse;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
 import com.app.entities.Reviews;
+import com.app.entities.RoleType;
+import com.app.entities.SignIn;
 import com.app.dao.BuyerDao;
 import com.app.dao.FreelancerDao;
 
@@ -32,8 +44,10 @@ import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
 import com.app.entities.Gigs;
 import com.app.entities.Orders;
+import com.app.entities.Payment;
 import com.app.dao.BuyerDao;
 import com.app.dao.OrderDao;
+import com.app.dao.PaymentDao;
 import com.app.dao.ReviewDao;
 
 
@@ -47,12 +61,14 @@ public class BuyerServiceImpl implements BuyerService {
 	private BuyerDao buyerDao;
 	@Autowired 
 	private FreelancerDao freelancerDao;
-
 	@Autowired 
 	private ReviewDao reviewDao;
 	@Autowired
 	private OrderDao orderDao;
-	
+	@Autowired
+	private PaymentDao paymentDao;
+	private PasswordEncoder passwordEncoder;
+
 
 	@Override
 	public BuyerDTO findById(Long id) {
@@ -66,6 +82,18 @@ public class BuyerServiceImpl implements BuyerService {
 	
 	@Override
 	public BuyerDTO addBuyer(BuyerDTO buyer) {
+		
+		SignInDTO signInDto=new SignInDTO();
+		signInDto.setEmail(buyer.getEmail());
+		String encryptedPassword=passwordEncoder.encode(buyer.getPassword());
+		signInDto.setPassword(encryptedPassword);
+		signInDto.setUserRole(RoleType.ROLE_BUYER);
+		buyer.setSignIn(signInDto); 
+		
+		System.out.println(encryptedPassword);
+		buyer.setPassword(encryptedPassword);
+		System.out.println(buyer.getPassword());
+		
 		
 		try {
 			Buyer buyerCreated = buyerDao.save(mapper.map(buyer, Buyer.class));
@@ -100,27 +128,55 @@ public class BuyerServiceImpl implements BuyerService {
 		
 		return mapper.map(updatedBuyer, BuyerDTO.class);
 	}
-//	@Override
-//	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
-//
-//	
-//		try {
-//		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
-//		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
-//			reviewCreated.setFreelancer(freelancer);
-//			
-//			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
-//			reviewCreated.setBuyer(buyer);
-//			System.out.println(reviewCreated);
-//			return mapper.map(reviewCreated, ReviewsDTO.class);
-//	
-//		}catch (Exception e) 
-//		{
-//			System.out.println("before null");
-//			return null;
-//		}
 
-	//}
+	@Override
+	public ReviewsDTO addReview(Long freelanceId ,Long buyerId ,ReviewsDTO review) {
+		try {
+			//freelancerId
+		    Freelancer freelancer =freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));	   
+		  //buyerId
+			Buyer buyer =  buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
+			
+			review.setFreelancer(freelancer);
+			review.setBuyer(buyer);	
+		    Reviews reviewCreated = reviewDao.save(mapper.map(review, Reviews.class));	
+	
+			System.out.println(reviewCreated);
+			return mapper.map(reviewCreated, ReviewsDTO.class);
+	
+		}catch (Exception e) 
+		{
+			System.out.println("before null");
+			return null;
+		}
+	}
+	
+	@Override
+	public PaymentDTO addPayment(Long freelanceId ,Long buyerId,PaymentDTO payment) {
+		// TODO Auto-generated method stub
+		try {
+
+			//freelancerId
+			Freelancer freelancer = freelancerDao.findById(freelanceId).orElseThrow(()->new ResourceNotFoundException("Freelancer with given id does not exist"));
+			System.out.println(freelancer.getId());
+			//buyerId
+			Buyer buyer = buyerDao.findById(buyerId).orElseThrow(()->new ResourceNotFoundException("Buyer with id not found"));
+			
+			payment.setBuyer(buyer);
+			payment.setFreelancer(freelancer);
+			
+			Payment paymentAdded = paymentDao.save(mapper.map(payment,Payment.class ));
+			System.out.println(paymentAdded);
+			return mapper.map(paymentAdded, PaymentDTO.class);
+						
+		}catch (Exception e) 
+		{
+			// TODO: handle exception
+			System.out.println("before null");
+			return null;
+		}		
+	} 
+	
 	
 	@Override
 	public PlaceOrderDTO createNewOrder(PlaceOrderDTO order) {
@@ -164,14 +220,15 @@ public class BuyerServiceImpl implements BuyerService {
 		return returnOrder;
 	}
 
+
  	
 	public List<ReviewsDTO> getAllReviews(Long buyerId) {
 	    // Assuming you have a method in reviewDao to retrieve reviews by buyerId
 	    List<Reviews> reviews = reviewDao.findByBuyerId(buyerId);
 	    // Mapping Reviews objects to ReviewsDTO
 	    List<ReviewsDTO> reviewsDTOList = reviews.stream()
-	            .map(review -> mapper.map(review, ReviewsDTO.class))
-	            .collect(Collectors.toList());
+	            								 .map(review -> mapper.map(review, ReviewsDTO.class))
+	            								 .collect(Collectors.toList());
 
 	    return reviewsDTOList;
 	}
@@ -195,7 +252,36 @@ public class BuyerServiceImpl implements BuyerService {
 		} else
 			throw new ApiException("Image not yet assigned !!!!");
 	}
+
+	@Override
+	public List<PaymentDTO> getAllPayments(Long buyerId) {
+	    // Assuming you have a method in paymentDao to retrieve reviews by buyerId
+		List<Payment> payments = paymentDao.findByBuyerId(buyerId);
+		// Mapping payments objects to PaymentsDTO
+		List<PaymentDTO> paymentsDTOList = payments.stream()
+													.map(payment -> mapper.map(payment, PaymentDTO.class))
+													.collect(Collectors.toList());
+												
+		
+		return paymentsDTOList;
+	}
+
+	@Override
+	public List<Orders> getOrderDetails(Long buyerId) {
+		// NOT WORKING PROPERLY ------------------------------
+//		List<Orders> orderList =orderDao.findOrdersByBuyerIdNative(buyerId);
+		
+//	List<Orders> finalOrderList = new ArrayList<>();
+//	List<Orders> orderList = orderDao.findAll();
+		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
+	
+	return finalOrderList;			
+	}
+
+
 }
+
+
 
 
 

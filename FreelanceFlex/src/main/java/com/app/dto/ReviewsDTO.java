@@ -6,6 +6,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.app.entities.Buyer;
+import com.app.entities.Freelancer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +33,11 @@ public class ReviewsDTO {
 	@Min(value = 1)
 	@Max(value = 5)
 	private int rating;
+	
+	@JsonIgnore
+	private Buyer buyer;
+	@JsonIgnore
+	private Freelancer freelancer;
 
 
 }

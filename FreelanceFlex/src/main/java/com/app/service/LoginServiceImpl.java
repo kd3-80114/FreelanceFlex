@@ -11,7 +11,7 @@ import com.app.dto.LoginCredDTO;
 import com.app.dto.LoginResponseDTO;
 import com.app.entities.SignIn;
 @Service
-@Transactional
+@Transactional 
 public class LoginServiceImpl implements LoginService{
 	@Autowired
 	private LoginDao loginDao;
@@ -25,11 +25,9 @@ public class LoginServiceImpl implements LoginService{
 		//System.out.println(user.getUserRole());
 		if(user!=null)
 		{
-
-					LoginResponseDTO response=mapper.map(user,LoginResponseDTO.class);
-					response.setRole(user.getUserRole());
-					return response;
-			
+			LoginResponseDTO response=mapper.map(user,LoginResponseDTO.class);
+			response.setUserRole(user.getUserRole());
+			return response;			
 		}
 		return null;
 	}
