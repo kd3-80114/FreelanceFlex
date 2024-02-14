@@ -25,7 +25,7 @@ import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
-import com.app.service.ImageHandlingService;
+
 import com.app.entities.Orders;
 import com.app.entities.RoleType;
 import com.app.service.buyer.BuyerService;
@@ -37,7 +37,7 @@ public class BuyerController {
 	@Autowired
 	private BuyerService buyerService;
 //	@Autowired
-//	private ImageHandlingService imageService;
+
 	
 	@GetMapping("/viewProfile")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)

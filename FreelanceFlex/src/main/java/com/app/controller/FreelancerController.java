@@ -26,7 +26,7 @@ import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.ApiResponse;
 import com.app.entities.Freelancer;
-import com.app.service.ImageHandlingService;
+
 import com.app.dto.SignInDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.dto.freelancerdto.GigDTO;
@@ -41,8 +41,7 @@ public class FreelancerController {
 	@Autowired
 	private FreelanceService freelancerService;
 	
-//	@Autowired
-//	private ImageHandlingService imageService;
+
 
 	@Autowired
 	FreelancerDao freelancerDao ;
