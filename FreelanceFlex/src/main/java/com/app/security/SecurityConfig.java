@@ -42,15 +42,15 @@ public class SecurityConfig {
         .exceptionHandling().authenticationEntryPoint(authEntry)
         .and()
         .authorizeRequests()
-            .antMatchers("/", "/freelancer/signUp", "/buyer/signUp", "/login/user",
+            .antMatchers("/freelancer/signUp", "/buyer/signUp", "/login/user",
                     "/v*/api-doc*/**", "/swagger-ui/**").permitAll()
-            .antMatchers(HttpMethod.OPTIONS).permitAll() // Allow pre-flight requests for JS clients
-            .antMatchers("/freelancer/**","/buyer/viewProfile").hasRole("FREELANCER")
-            .antMatchers("/buyer/**","/freelancer/viewProfile").hasRole("BUYER")
+            .antMatchers(HttpMethod.OPTIONS).permitAll()// Allow pre-flight requests for JS clients
+//            .antMatchers("/freelancer/**","/buyer/viewProfile").hasRole("FREELANCER")
+//            .antMatchers("/buyer/**","/freelancer/viewProfile").hasRole("BUYER")
+//            .antMatchers("/freelancer/viewProfile","/freelancer/viewReview/**","/freelancer/viewOrders/**",
+//            		"/buyer/viewProfile","/buyer/viewReview/**","/buyer/viewOrders/**",
+//            		"/admin/**").hasRole("ADMIN")
 //            .antMatchers("/buyer/**","/buyer/viewProfile","/freelancer/**","/admin/**").hasRole("ADMIN")
-            .antMatchers("/freelancer/viewProfile","/freelancer/viewReview/**","/freelancer/viewOrders/**",
-            		"/buyer/viewProfile","/buyer/viewReview/**","/buyer/viewOrders/**",
-            		"/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
         .and()
         .sessionManagement()

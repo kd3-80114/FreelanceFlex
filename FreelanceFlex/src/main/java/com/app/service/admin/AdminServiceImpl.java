@@ -42,8 +42,8 @@ public class AdminServiceImpl implements AdminService{
 				new ResourceNotFoundException
 				("Admin with given id does not exist")),
 				AdminDTO.class) ;	
-
 		}
+	
 	@Override
 	public Buyer findBuyerByEmail(String email) {
 		Buyer buyer=buyerdao.findByEmail(email);
