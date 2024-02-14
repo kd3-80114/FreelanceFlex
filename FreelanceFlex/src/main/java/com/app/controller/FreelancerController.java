@@ -30,6 +30,7 @@ public class FreelancerController {
 	private FreelanceService freelancerService;
 	
 	@GetMapping("/viewProfile")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER' )")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)
 //	(@RequestParam /*@Valid*/ FreelancerProfileDTO freelancer)
 	{	
@@ -44,6 +45,7 @@ public class FreelancerController {
 	//1. add new freelancer 
 	// http://host:port/freelancer , method=POST
 	@PostMapping("/signUp")
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	public  ResponseEntity<?> addNewFreelance(@RequestBody FreelancerDTO freelancer)
 	{
 //		freelancer.getSignIn().setEmail(freelancer.getEmail());
@@ -62,6 +64,7 @@ public class FreelancerController {
 	//2.Create gig .
 	//http://host:port/freelancer/creategig,method=POST
 	@PostMapping("/createGig")
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	public  ResponseEntity<?> createNewGig(@RequestBody GigDTO gig)
 	{
 		
@@ -76,6 +79,7 @@ public class FreelancerController {
 	}
 	
 	@PutMapping("/{freelanceId}")
+	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	public  ResponseEntity<?> updateFreelance(@PathVariable Long freelanceId,@RequestBody FreelancerDTO freelancer)
 	{
 		System.out.println("In update Freelancer/put");
@@ -89,12 +93,14 @@ public class FreelancerController {
 	}
 
 	@GetMapping("/viewReview/{freelancerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER')")
 	public ResponseEntity<?> viewReview(@PathVariable Long freelancerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllReviews(freelancerId));	
 
 	}
 	@GetMapping("/viewOrders/{freelancerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER')")
 	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId){
 		List<Orders> finalOrderList =	freelancerService.getOrderDetails(freelancerId);
 		if (finalOrderList.isEmpty()) {

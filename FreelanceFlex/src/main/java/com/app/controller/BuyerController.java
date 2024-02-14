@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class BuyerController {
 	private BuyerService buyerService;
 	
 	@GetMapping("/viewProfile")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)
 	{	
 		System.out.println(id);
@@ -40,6 +42,7 @@ public class BuyerController {
 	//2. add new buyer
 	// http://host:port/buyer , method=POST
 	@PostMapping("/signUp") 
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
 		
@@ -59,6 +62,7 @@ public class BuyerController {
 	// http://host:port/buyer , method=PUT
 	
 	@PutMapping("/{buyerId}")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?>updateBuyer(@PathVariable Long buyerId, @RequestBody BuyerDTO buyer)
 	{
 		System.out.println("In update Buyer");
@@ -95,6 +99,7 @@ public class BuyerController {
 	//2. place new order
 		// http://host:port/buyer/placeOrder , method=POST
 	@PostMapping("/placeOrder")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderDTO order) {
 		System.out.println("In add new order/post");
 		System.out.println(order);
@@ -104,12 +109,14 @@ public class BuyerController {
 	
 
 	@GetMapping("/viewReview/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
 	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
 	}
 
 	@GetMapping("/viewOrders/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
 	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
 		List<Orders> finalOrderList =	buyerService.getOrderDetails(buyerId);
 		if (finalOrderList.isEmpty()) {
