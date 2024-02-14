@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "")
+@ToString(exclude = {"freelancer","buyer"})
 @Table(name = "payment")
 public class Payment extends BaseEntity{
 	

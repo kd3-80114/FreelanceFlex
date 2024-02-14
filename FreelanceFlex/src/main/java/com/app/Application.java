@@ -1,14 +1,15 @@
 package com.app;
 
-import java.time.LocalDate;
-
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.modelmapper.Conditions;
 
 @SpringBootApplication
 public class Application {
@@ -18,18 +19,23 @@ public class Application {
 	}
 
 	@Bean // equivalent to <bean id ..../> in xml file
-	public ModelMapper modelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
-				.setPropertyCondition(Conditions.isNotNull());// only non null properties will be transferred from src
-		// --> dest , during the mapping
-		modelMapper.addConverter(new StringToDateConverter());
+	public ModelMapper mapper() {
+		ModelMapper modelMapper = new ModelMapper();		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
+	.setPropertyCondition(Conditions.isNotNull());
 		return modelMapper;
 	}
-	public class StringToDateConverter extends AbstractConverter<String,LocalDate> {
-	    @Override
-	    protected LocalDate convert(String source) {
-	        return LocalDate.parse(source);
-	    }
+	//configure PasswordEncoder bean 
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{
+		return new BCryptPasswordEncoder();
 	}
+
+//	 @Bean
+//	 public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+//	        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
+//	        firewall.setAllowUrlEncodedSlash(true);
+//	        return firewall;
+//	    }
 }
+

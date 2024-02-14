@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService{
 		if(user!=null)
 		{
 			LoginResponseDTO response=mapper.map(user,LoginResponseDTO.class);
-			response.setRole(user.getUserRole());
+			response.setUserRole(user.getUserRole());
 			return response;			
 		}
 		return null;

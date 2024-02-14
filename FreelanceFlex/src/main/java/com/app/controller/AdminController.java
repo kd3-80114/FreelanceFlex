@@ -28,6 +28,7 @@ public class AdminController {
 		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
+
 	
 	@PostMapping("/findBuyerProfile")
 	public ResponseEntity<?> findBuyerProfileByEmail(@RequestParam String email)
@@ -52,6 +53,7 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.deleteFreelancer(freelancerId));
 	}
 	
+
 	@DeleteMapping("/deleteBuyer/{buyerId}")
 	public ResponseEntity<?> deleteBuyer(@PathVariable Long buyerId){
 		System.out.println("in delete buyer");
@@ -89,6 +91,18 @@ public class AdminController {
 		System.out.println(freelancerId);
 		
 		String finalResult = adminService.getFreelancer(freelancerId);
+		if (finalResult == "Blocked") 
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);
+	}
+	@GetMapping("/blockBuyer/{buyerId}")
+	public ResponseEntity<?> blockBuyer(@PathVariable Long buyerId){
+		System.out.println("in admin block freelancer");
+		System.out.println(buyerId);
+		
+		String finalResult = adminService.getBuyer(buyerId);
 		if (finalResult == "Blocked") {
 			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
 		}

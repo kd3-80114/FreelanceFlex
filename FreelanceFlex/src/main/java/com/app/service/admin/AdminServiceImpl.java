@@ -42,8 +42,8 @@ public class AdminServiceImpl implements AdminService{
 				new ResourceNotFoundException
 				("Admin with given id does not exist")),
 				AdminDTO.class) ;	
-	}
-	
+
+		}
 	@Override
 	public Buyer findBuyerByEmail(String email) {
 		Buyer buyer=buyerdao.findByEmail(email);
@@ -53,7 +53,6 @@ public class AdminServiceImpl implements AdminService{
 		buyer.getBuyerIssues().size();
 		return buyer;
 	}
-	
 	@Override
 	public Freelancer findFreelancerByEmail(String email) {
 		Freelancer freelancer=freelancerdao.findByEmail(email);
@@ -64,7 +63,6 @@ public class AdminServiceImpl implements AdminService{
 		freelancer.getFreelancerOrders().size();
 		return freelancer;
 	}
-	
 	@Override
 	public String deleteFreelancer(Long freelancerId) {
 		freelancerdao.deleteById(freelancerId);
@@ -76,13 +74,11 @@ public class AdminServiceImpl implements AdminService{
 		buyerdao.deleteById(buyerId);
 		return "Successfully deleted";
 	}
-
 	@Override
 	public List<Orders> getFreelancerOrders(Long freelancerId) {
 		List<Orders> finalOrderList = orderDao.findAllOrderByFreelancerId(freelancerId);
 		return finalOrderList;
 	}
-
 	@Override
 	public List<Orders> getBuyerOrders(Long buyerId) {
 		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
@@ -95,5 +91,11 @@ public class AdminServiceImpl implements AdminService{
 		freelancer.setBlocked(true);
 		return "Blocked";
 	}
-
+	@Override
+	public String getBuyer(Long buyerId) {
+		Buyer buyer = buyerdao.findById(buyerId).orElseThrow(()-> new ResourceNotFoundException("Buyer Not Found"));
+		buyer.setBlocked(true);
+		return "Blocked"; 
+		
+	}
 }

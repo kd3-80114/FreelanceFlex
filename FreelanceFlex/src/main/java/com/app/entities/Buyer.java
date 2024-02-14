@@ -28,7 +28,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "permanentAddress")
+@ToString(exclude = {"permanentAddress","buyerPayment","buyerReview"})
 @Table(name = "buyer")
 public class Buyer extends BaseEntity{
 	
@@ -77,11 +77,9 @@ public class Buyer extends BaseEntity{
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
-	private SignIn signin;
+	private SignIn signIn;
 
-	
-		
-	
+
 	}
 
 

@@ -10,6 +10,7 @@ import com.app.entities.Orders;
 public interface AdminService {
 	AdminDTO findById(Long id);
 
+
 	Buyer findBuyerByEmail(String email);
 
 	Freelancer findFreelancerByEmail(String email);
@@ -23,4 +24,11 @@ public interface AdminService {
 	List<Orders> getBuyerOrders(Long buyerId);
 
 	String getFreelancer(Long freelancerId);
+
+
+	String getBuyer(Long buyerId);
+
 }
+
+
+
