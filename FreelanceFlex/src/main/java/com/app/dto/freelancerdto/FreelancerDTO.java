@@ -37,10 +37,10 @@ import lombok.ToString;
 //		,message = "Invalid password")
 //		private String password;
 		
-		@NotBlank(message = "password can not be blank")
-		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
-		,message = "Invalid password")
-		private String password;
+//		@NotBlank(message = "password can not be blank")
+//		@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!?])(?=.*[a-zA-Z0-9@#$%^&+=!?]{8,})[a-zA-Z0-9@#$%^&+=!?]{8,20}$"
+//		,message = "Invalid password")
+//		private String password;
 		
 		@NotBlank(message = "contactNo can not be blank")
 		private String contactNo;

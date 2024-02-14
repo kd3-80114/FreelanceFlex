@@ -1,4 +1,5 @@
 package com.app.service.freelancer;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -6,6 +7,9 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.app.custom_exceptions.ApiException;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
 import com.app.dto.ReviewsDTO;
@@ -16,6 +20,7 @@ import com.app.dao.ReviewDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
 
 import com.app.entities.Address;
+import com.app.entities.ApiResponse;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
 import com.app.entities.Skills;
@@ -103,6 +108,27 @@ public class FreelanceServiceImpl implements FreelanceService {
 	            .collect(Collectors.toList());
 		return reviewsDTOList;
 	}
+	    @Override
+		public ApiResponse uploadImage(Long id, MultipartFile image) throws IOException {
+		    Freelancer freelancer = freelancerDao.findById(id)
+		            .orElseThrow(() -> new ResourceNotFoundException("Freelancer with given id does not exist")); // Exception message modified
+		    freelancer.setProfilePicture(image.getBytes());
+		    freelancerDao.save(freelancer);
+		    return new ApiResponse("Image file uploaded successfully for freelancer id " + id);
+		}
+		
+		@Override
+		public byte[] serveImageOfreelancer(long id) {
+			
+			Freelancer freelancer = freelancerDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid emp ID!!!!"));
+
+			if (freelancer != null) {
+			
+				 return freelancer.getProfilePicture();
+			} else
+				throw new ApiException("Image not yet assigned !!!!");
+		}
+	
 
 }
 

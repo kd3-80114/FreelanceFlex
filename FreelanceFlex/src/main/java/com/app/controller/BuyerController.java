@@ -1,5 +1,11 @@
 package com.app.controller;
 
+import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.service.ImageHandlingService;
 import com.app.service.buyer.BuyerService;
 
 @RestController
@@ -24,6 +32,8 @@ public class BuyerController {
 
 	@Autowired
 	private BuyerService buyerService;
+//	@Autowired
+//	private ImageHandlingService imageService;
 	
 	@GetMapping("/viewProfile")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id, @RequestParam String email, @RequestParam String Role)
@@ -102,6 +112,18 @@ public class BuyerController {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
 	}
-	
+	//uploadImage
+	@PostMapping(value = "/images/{buyerId}", consumes = "multipart/form-data")
+	public ResponseEntity<?> uploadImage(@PathVariable Long buyerId, @RequestParam MultipartFile image)
+			throws IOException {
+		System.out.println("in upload image " + buyerId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(buyerService.uploadImage(buyerId, image));
+	}
+	//downloadImage
+	@GetMapping(value = "/images/{buyerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+	public ResponseEntity<?> downloadImage(@PathVariable long buyerId) throws IOException {
+		System.out.println("in download image " + buyerId);
+		return ResponseEntity.ok(buyerService.serveImageOfbuyer(buyerId));
+	}
 }
 

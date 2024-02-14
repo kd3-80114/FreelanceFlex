@@ -1,10 +1,14 @@
 package com.app.service.buyer;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
+import com.app.entities.ApiResponse;
 
 public interface BuyerService {
 
@@ -19,5 +23,7 @@ public interface BuyerService {
 	PlaceOrderDTO createNewOrder(PlaceOrderDTO order);
 
 	List<ReviewsDTO> getAllReviews(Long buyerId);
+	ApiResponse uploadImage(Long id, MultipartFile image)throws IOException;
+	public byte[] serveImageOfbuyer(long id);
 
 }
