@@ -103,7 +103,7 @@ public class BuyerController {
 	}
 	
 
-	@GetMapping("/{buyerId}")
+	@GetMapping("/viewReview/{buyerId}")
 	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	

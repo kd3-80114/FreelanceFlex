@@ -88,7 +88,7 @@ public class FreelancerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
 
-	@GetMapping("/{freelancerId}")
+	@GetMapping("/viewReview/{freelancerId}")
 	public ResponseEntity<?> viewReview(@PathVariable Long freelancerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllReviews(freelancerId));	
