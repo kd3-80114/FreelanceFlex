@@ -1,6 +1,5 @@
 package com.app.entities;
 
 public enum RoleType {
-	FREELANCER,ADMIN,BUYER
-
+	ROLE_FREELANCER,ROLE_ADMIN,ROLE_BUYER
 }

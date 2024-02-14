@@ -14,10 +14,12 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dto.ReviewsDTO;
+import com.app.dto.SignInDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -26,6 +28,8 @@ import com.app.entities.Address;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
 import com.app.entities.Reviews;
+import com.app.entities.RoleType;
+import com.app.entities.SignIn;
 import com.app.dao.BuyerDao;
 import com.app.dao.FreelancerDao;
 
@@ -53,7 +57,8 @@ public class BuyerServiceImpl implements BuyerService {
 	private ReviewDao reviewDao;
 	@Autowired
 	private OrderDao orderDao;
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public BuyerDTO findById(Long id) {
@@ -67,6 +72,18 @@ public class BuyerServiceImpl implements BuyerService {
 	
 	@Override
 	public BuyerDTO addBuyer(BuyerDTO buyer) {
+		
+		SignInDTO signInDto=new SignInDTO();
+		signInDto.setEmail(buyer.getEmail());
+		String encryptedPassword=passwordEncoder.encode(buyer.getPassword());
+		signInDto.setPassword(encryptedPassword);
+		signInDto.setUserRole(RoleType.ROLE_BUYER);
+		buyer.setSignIn(signInDto); 
+		
+		System.out.println(encryptedPassword);
+		buyer.setPassword(encryptedPassword);
+		System.out.println(buyer.getPassword());
+		
 		
 		try {
 			Buyer buyerCreated = buyerDao.save(mapper.map(buyer, Buyer.class));
