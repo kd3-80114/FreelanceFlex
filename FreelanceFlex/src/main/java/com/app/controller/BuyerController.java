@@ -18,6 +18,7 @@ import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.entities.Gigs;
 import com.app.entities.Orders;
 import com.app.service.buyer.BuyerService;
 
@@ -108,6 +109,13 @@ public class BuyerController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
 		
+	}
+	
+	@GetMapping("viewGigs/{freelancerId}")
+	public ResponseEntity<?> viewGigs(@PathVariable Long freelancerId){
+		List<Gigs> freelancerGigs =	buyerService.getAllGigs(freelancerId);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerGigs);	
 	}
 	
 }

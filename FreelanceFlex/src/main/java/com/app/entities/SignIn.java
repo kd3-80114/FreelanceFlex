@@ -1,7 +1,5 @@
 package com.app.entities;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,9 +17,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "")
+@ToString
 @Table(name = "signIn")
-
 public class SignIn extends BaseEntity{	
 	@Column(length = 50)
 	private String email;

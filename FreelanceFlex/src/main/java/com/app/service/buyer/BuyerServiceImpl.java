@@ -23,7 +23,7 @@ import com.app.entities.Freelancer;
 import com.app.entities.Reviews;
 import com.app.dao.BuyerDao;
 import com.app.dao.FreelancerDao;
-
+import com.app.dao.GigDao;
 import com.app.dto.freelancerdto.GigDTO;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
@@ -49,6 +49,8 @@ public class BuyerServiceImpl implements BuyerService {
 	private ReviewDao reviewDao;
 	@Autowired
 	private OrderDao orderDao;
+	@Autowired
+	private GigDao gigDao;
 	
 
 	@Override
@@ -171,7 +173,13 @@ public class BuyerServiceImpl implements BuyerService {
 		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
 	
 	return finalOrderList;			
-	} 	
+	}
+
+	@Override
+	public List<Gigs> getAllGigs(Long freelancerId) {
+		List<Gigs> listOfGigs=gigDao.findByFreelancerId(freelancerId);
+		return listOfGigs;
+	}	
 }
 
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.dto.freelancerdto.GigDTO;
+import com.app.entities.Gigs;
 import com.app.entities.Orders;
 import com.app.service.freelancer.FreelanceService;
 
@@ -88,5 +89,12 @@ public class FreelancerController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);	
+	}
+	
+	@GetMapping("viewGigs/{freelancerId}")
+	public ResponseEntity<?> viewGigs(@PathVariable Long freelancerId){
+		List<Gigs> freelancerGigs =	freelancerService.getAllGigs(freelancerId);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerGigs);	
 	}
 }

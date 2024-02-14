@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
+import com.app.entities.Gigs;
 import com.app.entities.Orders;
 
 public interface BuyerService {
@@ -19,5 +20,7 @@ public interface BuyerService {
 	PlaceOrderDTO createNewOrder(PlaceOrderDTO order);
 
 	List<Orders> getOrderDetails(Long buyerId);
+
+	List<Gigs> getAllGigs(Long freelancerId);
 
 }

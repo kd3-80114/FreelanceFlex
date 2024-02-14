@@ -97,6 +97,12 @@ public class FreelanceServiceImpl implements FreelanceService {
 		return finalOrderList;
 	}
 
+	@Override
+	public List<Gigs> getAllGigs(Long freelancerId) {
+		List<Gigs> listOfGigs=gigDao.findByFreelancerId(freelancerId);
+		return listOfGigs;
+	}
+
 
 }
 
