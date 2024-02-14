@@ -1,4 +1,5 @@
 package com.app.entities;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -23,87 +24,78 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity  
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "freelancer")
-public class Freelancer extends BaseEntity{
-	
-	@Column(name = "fname",length = 50)
+public class Freelancer extends BaseEntity {
+
+	@Column(name = "fname", length = 50)
 	private String firstName;
-	@Column(name = "lname",length = 50)
+	@Column(name = "lname", length = 50)
 	private String lastName;
 	@Column(length = 50, unique = true)
 	private String email;
-	@Column(name = "password",length = 500)
+	@Column(name = "password", length = 500)
 	private String password;
 	@Column(length = 15, unique = true)
 	private String contactNo;
-	@Column(length =500)
+	@Column(length = 500)
 	private String description;
 	@Lob
-	private byte [] profilePicture;
-	
-//	@Column(columnDefinition = "VARCHAR(255) DEFAULT 'FREELANCER'")
+	private byte[] profilePicture;
+
+	// @Column(columnDefinition = "VARCHAR(255) DEFAULT 'FREELANCER'")
 	final private String role = "FREELANCER";
-	
+
 	@Column
-	private boolean isBlocked=false;
+	private boolean isBlocked = false;
 
 	@JsonIgnore
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "freelancerAddress",nullable = true)
-	//@MapsId
+	@JoinColumn(name = "freelancerAddress", nullable = true)
+	// @MapsId
 	private Address permanentAddress;
 
-	
 	@JsonIgnore
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
-	//@MapsId
+	// @MapsId
 	private Skills skills;
 
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
-	private List <Gigs> gigs = new ArrayList<>();
-	
+	@OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Gigs> gigs = new ArrayList<>();
 
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Reviews> freelancerReview = new ArrayList<>();
-	
 
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Payment> freelancerPayment = new ArrayList<>();
-	
 
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> freelancerOrders = new ArrayList<>();
-	
-
 
 	@JsonIgnore
-	@ToString.Exclude	
-	@OneToMany(mappedBy = "freelancer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@ToString.Exclude
+	@OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Issues> freelanceIssues = new ArrayList<>();
 
-
-	
 	@JsonIgnore
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(nullable = true)
+	@JoinColumn(name = "signIn", nullable = true)
+	// @MapsId
 	private SignIn signIn;
 }
-
-
