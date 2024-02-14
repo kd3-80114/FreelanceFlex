@@ -91,7 +91,8 @@ public class AdminController {
 		System.out.println(freelancerId);
 		
 		String finalResult = adminService.getFreelancer(freelancerId);
-		if (finalResult == "Blocked") {
+		if (finalResult == "Blocked") 
+		{
 			return ResponseEntity.status(HttpStatus.OK).body(finalResult);
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(finalResult);

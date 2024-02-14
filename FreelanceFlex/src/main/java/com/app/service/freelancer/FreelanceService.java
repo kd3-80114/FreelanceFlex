@@ -3,6 +3,7 @@ package com.app.service.freelancer;
 
 import java.util.List;
 
+import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -22,9 +23,8 @@ public interface FreelanceService {
 	FreelancerDTO addFreelancer(FreelancerDTO freelancer);
 	FreelancerDTO updateFreelancer(Long freelanceId,FreelancerDTO freelancer);
 	GigDTO addNewGig(GigDTO gig);
-
 	List<ReviewsDTO> getAllReviews(Long freelancerId);
-
 	List<Orders> getOrderDetails(Long freelancerId);
+	List<PaymentDTO> getAllPayments(Long freelancerId);
 
 }

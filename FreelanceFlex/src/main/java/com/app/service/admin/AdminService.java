@@ -26,3 +26,6 @@ public interface AdminService {
 	String getFreelancer(Long freelancerId);
 
 }
+
+
+

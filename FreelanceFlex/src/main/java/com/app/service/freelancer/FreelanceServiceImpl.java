@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
+import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dao.GigDao;
 import com.app.dao.ReviewDao;
 import com.app.dao.OrderDao;
+import com.app.dao.PaymentDao;
 import com.app.dto.freelancerdto.FreelancerDTO;
 
 import com.app.entities.Address;
@@ -29,6 +31,7 @@ import com.app.entities.Gigs;
 import com.app.entities.Reviews;
 
 import com.app.entities.Orders;
+import com.app.entities.Payment;
 
 
 @Service
@@ -45,6 +48,8 @@ public class FreelanceServiceImpl implements FreelanceService {
 	private ModelMapper mapper;
 	@Autowired
 	private GigDao gigDao;
+	@Autowired
+	private PaymentDao paymentDao;
 	
 	@Override
 	public FreelancerDTO findById(Long id) 
@@ -104,7 +109,6 @@ public class FreelanceServiceImpl implements FreelanceService {
 	}
 	
 	@Override
-
 	public List<ReviewsDTO> getAllReviews(Long freelancerId) {
 		  // Assuming you have a method in reviewDao to retrieve reviews by freelancerId
 	    List<Reviews> reviews = reviewDao.findByfreelancerId(freelancerId);
@@ -115,12 +119,24 @@ public class FreelanceServiceImpl implements FreelanceService {
 	            .collect(Collectors.toList());
 		return reviewsDTOList;
 	}
+	
+	@Override
+	public List<PaymentDTO> getAllPayments(Long freelancerId) {
+		 // Assuming you have a method in paymentDao to retrieve reviews by freelancerId
+	    List<Payment> payments = paymentDao.findByfreelancerId(freelancerId);
+	    
+	    // Mapping Payment objects to PaymentDTO
+	    List<PaymentDTO> paymentDTOList = payments.stream()
+	    								.map(payment -> mapper.map(payment, PaymentDTO.class))
+	    								.collect(Collectors.toList());
+	    
+		return paymentDTOList;
+	}
 
 	public List<Orders> getOrderDetails(Long freelancerId) {
 		List<Orders> finalOrderList = orderDao.findAllOrderByFreelancerId(freelancerId);
 		return finalOrderList;
 	}
-
 
 }
 

@@ -81,10 +81,17 @@ public class FreelancerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(finalResult);
 	}
 
-	@GetMapping("/{freelancerId}")
+	@GetMapping("/viewReviews/{freelancerId}")
 	public ResponseEntity<?> viewReview(@PathVariable Long freelancerId) {
 		System.out.println("In  view Reviews");	
 		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllReviews(freelancerId));	
+
+	}
+	
+	@GetMapping("/viewPayments/{freelancerId}")
+	public ResponseEntity<?> viewPayment(@PathVariable Long freelancerId) {
+		System.out.println("In  view Payment");	
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerService.getAllPayments(freelancerId));	
 
 	}
 	@GetMapping("/viewOrders/{freelancerId}")
