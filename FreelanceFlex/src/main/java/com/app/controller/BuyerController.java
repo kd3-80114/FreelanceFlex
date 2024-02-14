@@ -19,6 +19,7 @@ import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 import com.app.entities.Orders;
+import com.app.entities.RoleType;
 import com.app.service.buyer.BuyerService;
 
 @RestController
@@ -29,7 +30,7 @@ public class BuyerController {
 	private BuyerService buyerService;
 	
 	@GetMapping("/viewProfile")
-	public ResponseEntity<?> viewProfile(@RequestParam Long id, @RequestParam String email, @RequestParam String Role)
+	public ResponseEntity<?> viewProfile(@RequestParam Long id)
 	{	
 		System.out.println(id);
 
@@ -38,9 +39,10 @@ public class BuyerController {
 	
 	//2. add new buyer
 	// http://host:port/buyer , method=POST
-	@PostMapping 
+	@PostMapping("/signUp") 
 	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
+		
 		System.out.println("In add new Buyer/post");
 		System.out.println(buyer);
 //		return ResponseEntity.status(HttpStatus.OK).body(buyerService.addBuyer(buyer));

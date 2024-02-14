@@ -103,8 +103,7 @@ public class Freelancer extends BaseEntity{
 	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
-	//@MapsId
-	private SignIn signin;
+	private SignIn signIn;
 }
 
 

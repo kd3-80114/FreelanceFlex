@@ -1,13 +1,8 @@
 package com.app.entities;
-
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
-
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +14,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "")
+@ToString(exclude = "password")
 @Table(name = "signIn")
-
 public class SignIn extends BaseEntity{	
 	@Column(length = 50)
 	private String email;
 	@Column(length = 300,nullable = false)
 	private String password;
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) 
 	private RoleType userRole;
+
 }
