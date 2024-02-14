@@ -1,5 +1,6 @@
 package com.app.service.buyer;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.app.custom_exceptions.ApiException;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
@@ -27,6 +30,7 @@ import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
 
 import com.app.entities.Address;
+import com.app.entities.ApiResponse;
 import com.app.entities.Buyer;
 import com.app.entities.Freelancer;
 import com.app.entities.Reviews;
@@ -229,6 +233,25 @@ public class BuyerServiceImpl implements BuyerService {
 	    return reviewsDTOList;
 	}
 	
+	@Override
+	public ApiResponse uploadImage(Long id, MultipartFile image) throws IOException {
+	    Buyer buyer = buyerDao.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("buyer with given id does not exist")); // Exception message modified
+	    buyer.setProfilePicture(image.getBytes());
+	    buyerDao.save(buyer);
+	    return new ApiResponse("Image file uploaded successfully for buyerid " + id);
+	}
+	@Override
+	public byte[] serveImageOfbuyer(long id) {
+		
+		Buyer buyer = buyerDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid emp ID!!!!"));
+
+		if (buyer  != null) {
+		
+			 return buyer .getProfilePicture();
+		} else
+			throw new ApiException("Image not yet assigned !!!!");
+	}
 
 	@Override
 	public List<PaymentDTO> getAllPayments(Long buyerId) {

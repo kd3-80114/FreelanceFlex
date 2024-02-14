@@ -1,5 +1,10 @@
 package com.app.controller;
 
+import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dto.buyerdto.PlaceOrderDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
+
 import com.app.entities.Orders;
 import com.app.entities.RoleType;
 import com.app.service.buyer.BuyerService;
@@ -29,6 +36,8 @@ public class BuyerController {
 
 	@Autowired
 	private BuyerService buyerService;
+//	@Autowired
+
 	
 	@GetMapping("/viewProfile")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)
@@ -141,5 +150,17 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);
 
 	}
-	
+	//uploadImage
+	@PostMapping(value = "/images/{buyerId}", consumes = "multipart/form-data")
+	public ResponseEntity<?> uploadImage(@PathVariable Long buyerId, @RequestParam MultipartFile image)
+			throws IOException {
+		System.out.println("in upload image " + buyerId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(buyerService.uploadImage(buyerId, image));
+	}
+	//downloadImage
+	@GetMapping(value = "/images/{buyerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+	public ResponseEntity<?> downloadImage(@PathVariable long buyerId) throws IOException {
+		System.out.println("in download image " + buyerId);
+		return ResponseEntity.ok(buyerService.serveImageOfbuyer(buyerId));
+	}
 }

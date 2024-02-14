@@ -1,5 +1,9 @@
 package com.app.controller;
 
+import java.io.IOException;
+import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.app.custom_exceptions.ResourceNotFoundException;
+import com.app.dao.FreelancerDao;
+import com.app.dto.freelancerdto.FreelancerDTO;
+import com.app.dto.freelancerdto.GigDTO;
+import com.app.entities.ApiResponse;
+import com.app.entities.Freelancer;
 
 import com.app.dto.SignInDTO;
 import com.app.dto.freelancerdto.FreelancerDTO;
@@ -28,6 +40,11 @@ public class FreelancerController {
 
 	@Autowired
 	private FreelanceService freelancerService;
+	
+
+
+	@Autowired
+	FreelancerDao freelancerDao ;
 	
 	@GetMapping("/viewProfile")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)
@@ -109,4 +126,23 @@ public class FreelancerController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(finalOrderList);	
 	}
+	
+	//uploadImage
+	@PostMapping(value = "/images/{freelancerId}", consumes = "multipart/form-data")
+	public ResponseEntity<?> uploadImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image)
+	        throws IOException {
+	    System.out.println("In upload image " + freelancerId);
+	    return ResponseEntity.status(HttpStatus.CREATED)
+	            .body(freelancerService.uploadImage(freelancerId, image)); 
+	}
+
+	
+	
+	//7. download image
+		// http://host:port/employees/images/{empId} , method=GET
+		@GetMapping(value = "/images/{freelancerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+		public ResponseEntity<?> downloadImage(@PathVariable long freelancerId) throws IOException {
+			System.out.println("in download image " + freelancerId);
+			return ResponseEntity.ok(freelancerService.serveImageOfreelancer(freelancerId));
+		}
 }
