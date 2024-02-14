@@ -63,7 +63,7 @@ public class FreelancerController {
 	// 1. add new freelancer
 	// http://host:port/freelancer , method=POST
 	@PostMapping("/signUp")
-	@PreAuthorize("hasRole('ROLE_FREELANCER')")
+//	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	public  ResponseEntity<?> addNewFreelance(@RequestBody FreelancerDTO freelancer)
 	{
 //		freelancer.getSignIn().setEmail(freelancer.getEmail());

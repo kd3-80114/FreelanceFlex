@@ -51,7 +51,7 @@ public class BuyerController {
 	// 2. add new buyer
 	// http://host:port/buyer , method=POST
 	@PostMapping("/signUp") 
-	@PreAuthorize("hasRole('ROLE_BUYER')")
+//	@PreAuthorize("hasRole('ROLE_BUYER')")
 	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
 		
@@ -104,7 +104,8 @@ public class BuyerController {
 
 	@GetMapping("/viewReview/{buyerId}")
 	@PreAuthorize("hasAnyRole('ROLE_BUYER','ROLE_ADMIN' )")
-	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
+	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) 
+	{
 		System.out.println("In  view Reviews");
 		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));
 	}
@@ -142,14 +143,14 @@ public class BuyerController {
 	}
 	
 
-	@GetMapping("/viewReview/{buyerId}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
-	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
-		System.out.println("In  view Reviews");	
-		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
-		PlaceOrderDTO finalResult = buyerService.createNewOrder(order);
-		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);
-	}
+//	@GetMapping("/viewReview/{buyerId}")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
+//	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
+//		System.out.println("In  view Reviews");	
+//		return ResponseEntity.status(HttpStatus.OK).body(buyerService.getAllReviews(buyerId));	
+//		PlaceOrderDTO finalResult = buyerService.createNewOrder(order);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);
+//	}
 
 	@GetMapping("/viewOrders/{buyerId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
