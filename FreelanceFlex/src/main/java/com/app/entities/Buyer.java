@@ -77,7 +77,7 @@ public class Buyer extends BaseEntity{
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true)
-	private SignIn signin;
+	private SignIn signIn;
 
 
 	}

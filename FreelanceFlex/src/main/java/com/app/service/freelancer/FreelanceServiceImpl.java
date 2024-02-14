@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dao.FreelancerDao;
 import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
+import com.app.dto.SignInDTO;
 import com.app.dto.buyerdto.BuyerDTO;
 import com.app.dao.GigDao;
 import com.app.dao.ReviewDao;
@@ -29,7 +31,7 @@ import com.app.entities.Freelancer;
 import com.app.entities.Gigs;
 
 import com.app.entities.Reviews;
-
+import com.app.entities.RoleType;
 import com.app.entities.Orders;
 import com.app.entities.Payment;
 
@@ -50,6 +52,9 @@ public class FreelanceServiceImpl implements FreelanceService {
 	private GigDao gigDao;
 	@Autowired
 	private PaymentDao paymentDao;
+
+	private PasswordEncoder passwordEncoder;
+
 	
 	@Override
 	public FreelancerDTO findById(Long id) 
@@ -65,13 +70,22 @@ public class FreelanceServiceImpl implements FreelanceService {
 	@Override
 	public FreelancerDTO addFreelancer(FreelancerDTO freelancer) {
 		try {
+			SignInDTO signInDto=new SignInDTO();
+			signInDto.setEmail(freelancer.getEmail());
+			String encryptedPassword=passwordEncoder.encode(freelancer.getPassword());
+			signInDto.setPassword(encryptedPassword);
+			signInDto.setUserRole(RoleType.ROLE_FREELANCER);
+			freelancer.setSignIn(signInDto);
+			
+			System.out.println(encryptedPassword);
+			freelancer.setPassword(encryptedPassword);
+			System.out.println(freelancer.getPassword());
 			Freelancer freelancerCreated = freelancerDao.save(mapper.map(freelancer, Freelancer.class));
 			return mapper.map(freelancerCreated, FreelancerDTO.class);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 		}
 		return null;
-
 	}
 	
 	@Override
