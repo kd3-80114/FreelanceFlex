@@ -23,6 +23,7 @@ public class PaymentDTO {
 // 	private Long buyerId;
 //	@NotNull
 //	private Long freelancerId;
+	// this is for testing
 	
 	@NotNull(message = "Payment cannot be null")
 	private double amount;
