@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString(exclude = "password")
 @Table(name = "signIn")
 public class SignIn extends BaseEntity {
-	@Column(length = 50)
+	@Column(length = 50,unique = true)
 	private String email;
 	@Column(length = 300, nullable = false)
 	private String password;

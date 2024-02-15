@@ -30,7 +30,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "freelancer")
-public class Freelancer extends BaseEntity {
+public class Freelancer extends BaseEntity implements User{
 
 	@Column(name = "fname", length = 50)
 	private String firstName;
