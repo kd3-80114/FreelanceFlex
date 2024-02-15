@@ -18,16 +18,19 @@ import com.app.dto.LoginCredDTO;
 import com.app.dto.LoginResponseDTO;
 import com.app.dto.SigninResponse;
 import com.app.entities.SignIn;
+import com.app.entities.User;
 import com.app.security.JwtUtils;
+import com.app.service.LoginService;
 import com.app.service.LoginServiceImpl;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 @Autowired
 private JwtUtils utils;
-
+@Autowired 
+private LoginService loginService;
 @Autowired 
 private AuthenticationManager mgr;
 
@@ -35,14 +38,26 @@ private AuthenticationManager mgr;
 @PostMapping("/user")
 public ResponseEntity<?> signIn(@RequestBody @Valid LoginCredDTO userCredentials)
 {
+	
 	System.out.println("in sign in ");
 	Authentication verifiedAuth = mgr
 			.authenticate(new UsernamePasswordAuthenticationToken
 					(userCredentials.getEmail(), userCredentials.getPassword()));
 	System.out.println(verifiedAuth.getClass());// Custom user details
+	
+	
+	User user=loginService.verifyUser(userCredentials);
+	
+	SigninResponse signInResponse = new SigninResponse (utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!");
+
+	LoginResponseDTO finalResponse=new LoginResponseDTO();
+	finalResponse.setSigninResponse(signInResponse);
+	finalResponse.setUser(user);
+	return ResponseEntity.status(HttpStatus.OK).body(finalResponse);
 	// => auth success
-	return ResponseEntity
-			.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!"));
+	
+//	return ResponseEntity
+//			.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!"));
 
 	//old implt by us
 //	LoginResponseDTO finalResponse=loginService.verifyUser(userCredentials);

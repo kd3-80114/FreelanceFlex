@@ -29,7 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = "")
 @Table(name = "admin")
-public class Admin extends BaseEntity{
+public class Admin extends BaseEntity implements User{
 	
 	@Column(name = "fname",length = 50)
 	private String firstName;
@@ -47,8 +47,8 @@ public class Admin extends BaseEntity{
 	@JoinColumn(nullable = false)
 	private SignIn signin;
 	
-	@OneToMany(mappedBy = "admin",cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<Issues> userIssues = new ArrayList<>();
+//	@OneToMany(mappedBy = "admin",cascade = CascadeType.ALL,orphanRemoval = true)
+//	private List<Issues> userIssues = new ArrayList<>();
 	
 	
 }

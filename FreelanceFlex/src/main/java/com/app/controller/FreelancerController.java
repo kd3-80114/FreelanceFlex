@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ import com.app.entities.Gigs;
 import com.app.entities.Orders;
 import com.app.entities.RoleType;
 import com.app.service.freelancer.FreelanceService;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/freelancer")
 public class FreelancerController {
@@ -63,7 +64,7 @@ public class FreelancerController {
 	// 1. add new freelancer
 	// http://host:port/freelancer , method=POST
 	@PostMapping("/signUp")
-	@PreAuthorize("hasRole('ROLE_FREELANCER')")
+	
 	public  ResponseEntity<?> addNewFreelance(@RequestBody FreelancerDTO freelancer)
 	{
 //		freelancer.getSignIn().setEmail(freelancer.getEmail());

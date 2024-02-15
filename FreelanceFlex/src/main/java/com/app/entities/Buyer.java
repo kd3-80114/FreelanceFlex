@@ -30,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = {"permanentAddress","buyerPayment","buyerReview"})
 @Table(name = "buyer")
-public class Buyer extends BaseEntity{
+public class Buyer extends BaseEntity implements User{
 	
 	@Column(name = "fname",length = 50)
 	private String firstName;
