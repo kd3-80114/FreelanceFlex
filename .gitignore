@@ -1,5 +1,5 @@
 /.metadata/
 
-/Servers
-/application.properties
+**/Servers
+**/application.properties
 
