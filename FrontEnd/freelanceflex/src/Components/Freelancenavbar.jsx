@@ -7,7 +7,7 @@ export function Freelancernavbar() {
  
 
   const onLogout = () => {
-    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('Authorization')
     navigate('/signin')
   }
 
@@ -45,8 +45,8 @@ export function Freelancernavbar() {
       </Link>
     <NavDropdown title="Gigs" id="gigs-dropdown">
       {/* Add your Gigs dropdown items here */}
-      <NavDropdown.Item href=''>Create Gig</NavDropdown.Item>
-      <NavDropdown.Item href='#'>View Gigs</NavDropdown.Item>
+      <NavDropdown.Item href='/freelancer/creategig'>Create Gig</NavDropdown.Item>
+      <NavDropdown.Item href='/freelancer/viewgigs'>View Gigs</NavDropdown.Item>
       {/* Add more items as needed */}
     </NavDropdown>
     
