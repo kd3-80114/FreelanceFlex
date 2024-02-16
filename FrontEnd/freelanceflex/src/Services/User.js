@@ -55,4 +55,37 @@ export async function signupUser(firstName, lastName, email, password,
     return createError(ex)
   }
 }
+
+export async function signupBuyer(firstName, lastName, email, password,
+  contactNo,description,profilePicture,country,state,city,landmark,pincode, userRole) {
+try {
+  const url = createUrl('buyer/signUp')
+  const body = {
+      firstName,
+      lastName,
+      email,
+      password,
+      contactNo,
+      description,
+      permanentAddress:{
+        country,
+        state,
+        city,
+        landmark,
+        pincode,
+      },
+      signIn:
+      {
+        email,
+        password,
+        userRole:"ROLE_BUYER",
+      }
+  }
+  const response = await axios.post(url, body)
+  return  {data:response.data,status:response.status}
+} catch (ex) {
+  return createError(ex)
+}
+}
+
 export default signinUser
