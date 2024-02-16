@@ -183,4 +183,39 @@ public class FreelanceServiceImpl implements FreelanceService {
 		List<Gigs> listOfGigs = gigDao.findByFreelancerId(freelancerId);
 		return listOfGigs;
 	}
+
+	@Override
+	public ApiResponse uploadGigsImage(Long freelancerId, MultipartFile image, int gigsid) {
+	
+				
+			List<Gigs> gigs=gigDao.findByFreelancerId(freelancerId);	
+			for (Gigs gig: gigs) {
+				if(gig.getId()==gigsid)
+				{
+					try {
+						gig.setGigImage(image.getBytes());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					gigDao.save(gig);
+										break;
+				}
+			}
+			// modified
+			return new ApiResponse("Image file uploaded successfully for freelancer id " + gigsid);
+
+	}
+
+	@Override
+	public byte[] saveGigImage(long gigsId) {
+		Gigs gig = gigDao.findById(gigsId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid emp ID!!!!"));
+
+		if (gig != null) {
+
+			return gig.getGigImage();
+		} else
+			throw new ApiException("Image not yet assigned !!!!");
+	}
 }

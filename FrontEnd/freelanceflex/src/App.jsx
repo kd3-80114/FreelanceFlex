@@ -14,6 +14,7 @@ import Viewprofile from './Pages/Freelancer/Viewprofile';
 import Freelancerhome from './Pages/Freelancer/FreelancerHome';
 import AdminHome from './Pages/Admin/AdminHome';
 import BuyerHome from './Pages/Buyer/BuyerHome';
+import Viewgig from './Pages/Freelancer/Viewgig';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
 <Route path='/freelancer/freelancersignup' element={<Freelacersignup></Freelacersignup>}/>
 <Route path='/freelancer/updateprofile' element={<Updateprofile></Updateprofile>}/>
 <Route path='/freelancer/vieworders' element={<Vieworders></Vieworders>}/>
+<Route path='/freelancer/viewgigs' element={<Viewgig></Viewgig>}/>
+
 <Route path='/freelancer/viewprofile' element={<Viewprofile></Viewprofile>}/>
 <Route path='/freelancer/freelancerhome' element={<Freelancerhome></Freelancerhome>}/>
 <Route path='/admin/adminhome' element={<AdminHome></AdminHome>}/>
