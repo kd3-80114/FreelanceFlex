@@ -45,7 +45,7 @@ public class FreelancerController {
 
 	@Autowired
 	FreelancerDao freelancerDao;
-
+ 
 	@GetMapping("/viewProfile")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER' )")
 	public ResponseEntity<?> viewProfile(@RequestParam Long id)

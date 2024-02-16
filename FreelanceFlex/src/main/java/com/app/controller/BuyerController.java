@@ -51,7 +51,7 @@ public class BuyerController {
 
 	// 2. add new buyer
 	// http://host:port/buyer , method=POST
-	@PostMapping("/signUp") 
+	@PostMapping("/signUp")  
 	
 	public ResponseEntity<?>addNewBuyer(@RequestBody BuyerDTO buyer)
 	{
@@ -85,7 +85,7 @@ public class BuyerController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(retrived);
 
 	}
-
+ 
 	// 4.Buyer reviews a freelancer
 	// http://host:port/buyer , method=PUT
 
