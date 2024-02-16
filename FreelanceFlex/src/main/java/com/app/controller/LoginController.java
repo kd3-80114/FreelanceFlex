@@ -54,21 +54,7 @@ public ResponseEntity<?> signIn(@RequestBody @Valid LoginCredDTO userCredentials
 	finalResponse.setSigninResponse(signInResponse);
 	finalResponse.setUser(user);
 	return ResponseEntity.status(HttpStatus.OK).body(finalResponse);
-	// => auth success
-	
-//	return ResponseEntity
-//			.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!"));
-
-	//old implt by us
-//	LoginResponseDTO finalResponse=loginService.verifyUser(userCredentials);
-//	if(finalResponse!=null)
-//	{
-//	return ResponseEntity.status(HttpStatus.OK).body(finalResponse);
-//	}
-//	else
-//	{
-//		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(finalResponse);
-//	}
+	//added something
 }
 }
 
