@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify'
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css'
 import Home from './Pages/Home';
 import Signup from './Pages/Signup';
@@ -14,7 +15,13 @@ import Viewprofile from './Pages/Freelancer/Viewprofile';
 import Freelancerhome from './Pages/Freelancer/FreelancerHome';
 import AdminHome from './Pages/Admin/AdminHome';
 import BuyerHome from './Pages/Buyer/BuyerHome';
+
 import Viewgig from './Pages/Freelancer/Viewgig';
+
+import Buyersignup from './Pages/Buyer/Buyersignup';
+import BuyerViewProfile from './Pages/Buyer/BuyerViewProfile';
+import Buyerviewreviews from './Pages/Buyer/Buyerviewreviews';
+
 
 function App() {
   return (
@@ -35,6 +42,10 @@ function App() {
 <Route path='/freelancer/freelancerhome' element={<Freelancerhome></Freelancerhome>}/>
 <Route path='/admin/adminhome' element={<AdminHome></AdminHome>}/>
 <Route path='/buyer/buyerhome' element={<BuyerHome></BuyerHome>}/>
+<Route path='/buyer/signup' element={<Buyersignup></Buyersignup>}/>
+<Route path='/buyer/viewProfile' element={<BuyerViewProfile></BuyerViewProfile>}/>
+<Route path='/buyer/viewReviews' element={<Buyerviewreviews></Buyerviewreviews>}/>
+
     </Routes>
     <ToastContainer></ToastContainer>
     </div>
