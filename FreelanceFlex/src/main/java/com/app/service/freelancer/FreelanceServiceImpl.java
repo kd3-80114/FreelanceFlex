@@ -118,6 +118,7 @@ public class FreelanceServiceImpl implements FreelanceService {
 	}
 
 	public GigDTO addNewGig(GigDTO gig) {
+		System.out.println(gig.getCategory());
 		Gigs newGig = mapper.map(gig, Gigs.class);
 		newGig.getFreelancer().setId(gig.getFreelancer().getId());
 		return mapper.map(gigDao.save(newGig), GigDTO.class);
