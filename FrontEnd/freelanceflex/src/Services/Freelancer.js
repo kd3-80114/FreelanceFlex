@@ -6,7 +6,6 @@ export async function createnewgig(id,title,description,selectedCategory,price) 
       const url = createUrl('freelancer/createGig')
       const category=selectedCategory
       const body = 
-
         {
             freelancer: {
               id 
@@ -16,6 +15,7 @@ export async function createnewgig(id,title,description,selectedCategory,price) 
             category,
             price 
           }
+          
           const headers = {
             headers: {
               Authorization: sessionStorage['Authorization'],
