@@ -152,12 +152,32 @@ public class FreelancerController {
 	public ResponseEntity<?> uploadImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image)
 			throws IOException {
 		System.out.println("In upload image " + freelancerId);
+		System.out.println(image);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(freelancerService.uploadImage(freelancerId, image));
 	}
+	// uploadGigsImage
+		@PostMapping(value = "/gigs/images/{freelancerId}/{gigsid}", consumes = "multipart/form-data")
+				@PreAuthorize("hasRole('ROLE_FREELANCER')")
+		public ResponseEntity<?> uploadGigImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image,@PathVariable int gigsid)
+				throws IOException {
+			System.out.println("In upload image " + freelancerId);
+			System.out.println("In upload image " + gigsid);
+			System.out.println(image);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(freelancerService.uploadGigsImage(freelancerId, image,gigsid));
+		}
+		
+		@PreAuthorize("hasRole('ROLE_FREELANCER')")
+		@GetMapping(value = "/gigs/images/{gigsId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+		public ResponseEntity<?> downloadGigsImage(@PathVariable long gigsId) throws IOException {
+			System.out.println("in download image " + gigsId);
+			return ResponseEntity.ok(freelancerService.saveGigImage(gigsId));
+		}
+	
 
 	// 7. download image
-	// http://host:port/employees/images/{empId} , method=GET
+
 	@PreAuthorize("hasRole('ROLE_FREELANCER')")
 	@GetMapping(value = "/images/{freelancerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
 	public ResponseEntity<?> downloadImage(@PathVariable long freelancerId) throws IOException {
