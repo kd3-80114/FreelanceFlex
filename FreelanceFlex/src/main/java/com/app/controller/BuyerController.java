@@ -144,8 +144,6 @@ public class BuyerController {
 	}
 	
 
-<<<<<<< HEAD
-=======
 //	@GetMapping("/viewReview/{buyerId}")
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
 //	public ResponseEntity<?> viewReview(@PathVariable Long buyerId) {
@@ -155,7 +153,6 @@ public class BuyerController {
 //		return ResponseEntity.status(HttpStatus.CREATED).body(finalResult);
 //	}
 
->>>>>>> 291853f3dba4eeb01b75bac2dbc8222635337db4
 	@GetMapping("/viewOrders/{buyerId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
 	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
