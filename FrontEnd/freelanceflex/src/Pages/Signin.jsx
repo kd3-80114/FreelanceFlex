@@ -20,8 +20,9 @@ export function Signin()
       if (result.status==200) 
       {
         // cache the token
-        const token = result['data']['signinResponse']['jwt']
-        sessionStorage['token'] = token
+        const recievedtoken = result['data']['signinResponse']['jwt']
+        const token="Bearer "+recievedtoken
+        sessionStorage['Authorization'] = token
         const user=result['data']['user']
         
         sessionStorage['currentUser']=JSON.stringify(user)
@@ -40,8 +41,10 @@ export function Signin()
         {
             navigate('/buyer/buyerhome')
             toast.success('Welcome')
-        }  
-      } else 
+        } 
+         
+      }
+      else 
       {
         toast.warn("Invalid Credentials")
       }

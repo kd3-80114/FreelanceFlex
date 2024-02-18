@@ -43,4 +43,8 @@ public interface FreelanceService {
 	List<Gigs> getAllGigs(Long freelancerId);
 
 	List<PaymentDTO> getAllPayments(Long freelancerId);
+
+	ApiResponse uploadGigsImage(Long freelancerId, MultipartFile image, int gigsid);
+
+	public byte[] saveGigImage(long gigsId);
 }

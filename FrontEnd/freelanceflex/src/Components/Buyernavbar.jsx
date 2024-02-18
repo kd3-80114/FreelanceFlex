@@ -1,16 +1,29 @@
 import { NavDropdown } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { viewBuyerReviews } from '../Services/Buyer'
 
-export function Freelancernavbar() {
+export function Buyernavbar() {
   const navigate = useNavigate()
-
- 
-
   const onLogout = () => {
     sessionStorage.removeItem('Authorization')
     sessionStorage.removeItem('currentUser')
     sessionStorage.removeItem('BuyerReviews')
     navigate('/signin')
+  }
+  const viewReviews = async () => {
+
+    var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    console.log(currentUser.id)
+    const result = await viewBuyerReviews(currentUser.id)
+  
+
+    if (result.status==200) {
+        console.log(result.data)
+      sessionStorage['BuyerReviews'] = JSON.stringify(result.data)
+        } else {
+      toast.warn("Please try again later")
+    }
   }
 
   return (
@@ -39,25 +52,27 @@ export function Freelancernavbar() {
   <ul className='navbar-nav'>
     <li className='nav-item'>
       <Link className='nav-link' aria-current='page' to='/'>
-        Home
       </Link>
     </li>
     <Link className='nav-link' aria-current='page' to='/'>
-        Orders
+
       </Link>
-    <NavDropdown title="Gigs" id="gigs-dropdown">
+    <NavDropdown title="Order" id="orders-dropdown">
       {/* Add your Gigs dropdown items here */}
-      <NavDropdown.Item href='/freelancer/creategig'>Create Gig</NavDropdown.Item>
-      <NavDropdown.Item href='/freelancer/viewgigs'>View Gigs</NavDropdown.Item>
+      <NavDropdown.Item href='/buyer/placeorder'>Place Order</NavDropdown.Item>
+      <NavDropdown.Item href='/buyer/vieworders'>View Orders</NavDropdown.Item>
       {/* Add more items as needed */}
     </NavDropdown>
-    
-    <NavDropdown title="Profile" id="profile-dropdown">
-      {/* Add your Profile dropdown items here */}
-      <NavDropdown.Item href='#'>Edit Profile</NavDropdown.Item>
-      <NavDropdown.Item href='#'>View Profile</NavDropdown.Item>
+    <NavDropdown title="Review" id="reviews-dropdown">
+      {/* Add your Gigs dropdown items here */}
+      <NavDropdown.Item href='/buyer/createreview'>Create Review</NavDropdown.Item>
+      {/* <NavDropdown.Item href='/buyer/viewreviews' onClick={viewReviews}>View Reviews</NavDropdown.Item> */}
+      <NavDropdown.Item href='/buyer/viewReviews' onClick={viewReviews}>View Reviews</NavDropdown.Item>
       {/* Add more items as needed */}
     </NavDropdown>
+    <Link className='nav-link' aria-current='page' to='/buyer/viewProfile'>
+      View Profile
+      </Link>
     <li className='nav-item'>
       <button onClick={onLogout} className='nav-link' aria-current='page'>
         Logout
@@ -71,4 +86,4 @@ export function Freelancernavbar() {
   )
 }
 
-export default Freelancernavbar
+export default Buyernavbar
