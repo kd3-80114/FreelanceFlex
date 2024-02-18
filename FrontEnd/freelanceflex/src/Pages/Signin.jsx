@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import signinUser from '../Services/User'
 export function Signin()
 {
-    const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const navigate = useNavigate()
@@ -25,7 +25,6 @@ export function Signin()
         sessionStorage['Authorization'] = token
         const user=result['data']['user']
         
-
         sessionStorage['currentUser']=JSON.stringify(user)
         console.log(user.role);
         if(user.role=='FREELANCER')
@@ -87,8 +86,7 @@ export function Signin()
           </div>
         </div>
         <div className='col'></div>
-      </div>
-        
+      </div>   
         </>)
 }
 export default Signin

@@ -31,7 +31,6 @@ public class AdminController {
 		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.OK).body(adminService.findById(id));
 	}
-
 	
 	@PostMapping("/findBuyerProfile")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
