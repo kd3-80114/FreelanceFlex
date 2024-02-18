@@ -47,7 +47,7 @@ export function Homenavbar() {
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' aria-current='page' to='/signup'>
+                <Link className='nav-link' aria-current='page' to='/buyer/signup'>
                   Become a buyer
                 </Link>
               </li>
