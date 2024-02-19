@@ -4,15 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 export function Freelancernavbar() {
   const navigate = useNavigate()
 
- 
-
   const onLogout = () => {
     sessionStorage.removeItem('Authorization')
     sessionStorage.removeItem('currentUser')
     sessionStorage.removeItem('BuyerReviews')
     navigate('/signin')
   }
-
+  
   return (
     <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
   <div className='container-fluid'>

@@ -15,12 +15,14 @@ import Viewprofile from './Pages/Freelancer/Viewprofile';
 import Freelancerhome from './Pages/Freelancer/FreelancerHome';
 import AdminHome from './Pages/Admin/AdminHome';
 import BuyerHome from './Pages/Buyer/BuyerHome';
-
 import Viewgig from './Pages/Freelancer/Viewgig';
-
 import Buyersignup from './Pages/Buyer/Buyersignup';
 import BuyerViewProfile from './Pages/Buyer/BuyerViewProfile';
 import Buyerviewreviews from './Pages/Buyer/Buyerviewreviews';
+import BuyerProfile from './Pages/Admin/BuyerProfile';
+import FreelancerProfile from './Pages/Admin/FreelancerProfile';
+import Buyernavbar from './Components/Buyernavbar';
+import Adminnavbar from './Components/Adminnavbar';
 
 
 function App() {
@@ -45,7 +47,8 @@ function App() {
 <Route path='/buyer/signup' element={<Buyersignup></Buyersignup>}/>
 <Route path='/buyer/viewProfile' element={<BuyerViewProfile></BuyerViewProfile>}/>
 <Route path='/buyer/viewReviews' element={<Buyerviewreviews></Buyerviewreviews>}/>
-
+<Route path='/admin/buyerprofile' element={<BuyerProfile/>}></Route>
+<Route path='/admin/freelancerprofile' element={<FreelancerProfile/>}></Route>
     </Routes>
     <ToastContainer></ToastContainer>
     </div>

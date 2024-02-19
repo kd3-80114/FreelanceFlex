@@ -21,7 +21,7 @@ return(
   <div className='container-fluid'>
   {/* Logo */}
   <Link className='navbar-brand' to='/'>
-    <em style={{ fontSize: '1.5em', color: '' }}>AdminFlex</em>
+    <em style={{ fontSize: '1.5em', color: '' }}>FreelanceFlex</em>
     </Link>
 
   <div className='collapse navbar-collapse justify-content-end' id='navbarSupportedContent'>
@@ -41,12 +41,13 @@ return(
 
     <NavDropdown title="Find" id="gigs-dropdown">
       {/* Add your Gigs dropdown items here */}
-      <NavDropdown.Item href='/admin/viewbuyer'>View Buyer</NavDropdown.Item>
-      <NavDropdown.Item href='/admin/viewfreelancer'>View Freelancer</NavDropdown.Item>
+      <NavDropdown.Item href='/buyer/ViewProfile'>View AdminProfile</NavDropdown.Item>
+      <NavDropdown.Item href='/admin/buyerprofile'>View BuyerProfile</NavDropdown.Item>
+      <NavDropdown.Item href='/admin/freelancerprofile'>View FreelancerProfile</NavDropdown.Item>
       {/* Add more items as needed */}
     </NavDropdown>
 
- 
+
     <li className='nav-item'>
       <button onClick={onLogout} className='nav-link' aria-current='page'>
         Logout
@@ -55,10 +56,7 @@ return(
   </ul> 
   </div>
   </div>
-</nav>
-    
-   
+</nav> 
 )
-
 }
 export default Adminnavbar
