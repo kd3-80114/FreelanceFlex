@@ -22,7 +22,7 @@ export async function createnewgig(id,title,description,selectedCategory,price) 
             },
           }
       
-      const response = await axios.post(url, body,headers)
+      const response = await axios.post(url,body,headers)
       return {data:response.data,status:response.status}
     } catch (ex) {
       return createError(ex)

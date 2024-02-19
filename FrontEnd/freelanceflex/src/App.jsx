@@ -14,6 +14,16 @@ import Viewprofile from './Pages/Freelancer/Viewprofile';
 import Freelancerhome from './Pages/Freelancer/FreelancerHome';
 import AdminHome from './Pages/Admin/AdminHome';
 import BuyerHome from './Pages/Buyer/BuyerHome';
+
+
+
+
+import BuyerProfile from './Pages/Admin/BuyerProfile';
+import FreelancerProfile from './Pages/Admin/FreelancerProfile';
+import Buyernavbar from './Components/Buyernavbar';
+import Adminnavbar from './Components/Adminnavbar';
+
+
 import AddGigImage from './Pages/Freelancer/AddGigImage'
 import Viewgig from './Pages/Freelancer/Viewgig';
 import ConfirmOrder from './Pages/Buyer/ConfirmOrder';
@@ -23,6 +33,7 @@ import Buyerviewreviews from './Pages/Buyer/Buyerviewreviews';
 import ViewOrders from './Pages/Buyer/ViewOrder';
 import PlaceOrder from './Pages/Buyer/PlaceOrder'
 import MakeReview from './Pages/Buyer/MakeReview'
+
 
 function App() {
   return (
@@ -46,9 +57,14 @@ function App() {
 <Route path='/buyer/placeorder' element={<PlaceOrder></PlaceOrder>}/>
 <Route path='/buyer/viewProfile' element={<BuyerViewProfile></BuyerViewProfile>}/>
 <Route path='/buyer/viewReviews' element={<Buyerviewreviews></Buyerviewreviews>}/>
+
+<Route path='/admin/buyerprofile' element={<BuyerProfile/>}></Route>
+<Route path='/admin/freelancerprofile' element={<FreelancerProfile/>}></Route>
+
 <Route path='/freelancer/addgigimage' element={<AddGigImage></AddGigImage>}/>
 <Route path='/buyer/confirmorder' element={<ConfirmOrder></ConfirmOrder>}/>
 <Route path='/buyer/vieworders' element={<ViewOrders></ViewOrders>}/>
+
 
     </Routes>
     <ToastContainer></ToastContainer>

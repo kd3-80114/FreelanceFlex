@@ -47,6 +47,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Buyer findBuyerByEmail(String email) {
 		Buyer buyer=buyerdao.findByEmail(email);
+		System.out.println(buyer);
 		buyer.getBuyerReview().size();
 		buyer.getBuyerPayment().size();
 		buyer.getBuyerOrders().size();
