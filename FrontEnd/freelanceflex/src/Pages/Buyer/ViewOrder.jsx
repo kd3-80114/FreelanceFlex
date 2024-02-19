@@ -1,12 +1,3 @@
-// export function Vieworders()
-// {
-//     return(<>
-//         <h1>Vieworders</h1>
-        
-//         </>)
-// }
-// export default Vieworders
-
 // import React, { useState, useEffect } from 'react';
 // import { getAllBuyerOrders } from '../../Services/Buyer';
 // import Buyernavbar from '../../Components/Buyernavbar';
@@ -64,14 +55,19 @@
 // export default OrderList;
 
 import React, { useState, useEffect } from 'react';
-import { getAllFreelancerOrders } from '../../Services/Freelancer';
-import Freelancenavbar from '../../Components/Freelancenavbar';
+import { getAllBuyerOrders } from '../../Services/Buyer';
+import Buyernavbar from '../../Components/Buyernavbar';
+import { getFreelancerIdFromOrderId } from '../../Services/Buyer'
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const OrderCard = ({ order }) => {
   const { id, amount, startDate, deliveryDate } = order;
   const navigate = useNavigate();
+
+  const handleMakeReview = async () => {
+    const freelancerId = await getFreelancerIdFromOrderId(id)
+    navigate(`/buyer/makereview`, {state : {orderid : id, fid : freelancerId.data}});
+  };
 
   return (
     <div className="card mb-3">
@@ -79,6 +75,7 @@ const OrderCard = ({ order }) => {
         <p className="card-text"><strong>Amount:</strong> ${amount}</p>
         <p className="card-text"><strong>Start Date:</strong> {new Date(startDate).toLocaleString()}</p>
         <p className="card-text"><strong>Delivery Date:</strong> {new Date(deliveryDate).toLocaleString()}</p>
+        <button onClick={handleMakeReview} className="btn btn-primary">Make Review</button>
       </div>
     </div>
   );
@@ -92,19 +89,8 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await getAllFreelancerOrders(currentbuyer.id);
-        console.log(response.data)
-        if(response.status!==200)
-        {
-            toast.warn("You dont have any orders yet..")
-            navigate('/freelancer/freelancerhome')
-        }
-        else
-        {
-            setOrders(response.data)
-        }
-        
-
+        const response = await getAllBuyerOrders(currentbuyer.id);
+        setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -115,7 +101,7 @@ const OrderList = () => {
 
   return (
     <>
-      <Freelancenavbar />
+      <Buyernavbar />
       <div className="container mt-4">
         <h1 className='title'>Orders</h1>
         <div className="row">

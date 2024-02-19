@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.dao.GigDao;
 import com.app.dto.PaymentDTO;
 import com.app.dto.ReviewsDTO;
 import com.app.dto.buyerdto.BuyerDTO;
@@ -94,7 +95,7 @@ public class BuyerController {
 	public ResponseEntity<?> addReview(@PathVariable Long freelanceId, @PathVariable Long buyerId,
 			@RequestBody ReviewsDTO review) {
 		ReviewsDTO reviewed = buyerService.addReview(freelanceId, buyerId, review);
-
+		System.out.println();
 		if (reviewed != null) {
 
 			return ResponseEntity.status(HttpStatus.OK).body(reviewed);
@@ -146,6 +147,7 @@ public class BuyerController {
 	@GetMapping("/viewOrders/{buyerId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_BUYER')")
 	public ResponseEntity<?> viewOrders(@PathVariable Long buyerId){
+		System.out.println("In buyer biew order");
 		List<Orders> finalOrderList =	buyerService.getOrderDetails(buyerId);
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -171,12 +173,38 @@ public class BuyerController {
 		return ResponseEntity.ok(buyerService.serveImageOfbuyer(buyerId));
 	}
 
-	@GetMapping("viewGigs/{freelancerId}")
+	@GetMapping("/viewGigs/{freelancerId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
 	public ResponseEntity<?> viewGigs(@PathVariable Long freelancerId) {
 		List<Gigs> freelancerGigs = buyerService.getAllGigs(freelancerId);
 
 		return ResponseEntity.status(HttpStatus.OK).body(freelancerGigs);
 	}
+	@GetMapping("/viewAllGigs")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
+	public ResponseEntity<?> viewAllGigs() {
+		List<Gigs> gigs = buyerService.getEveryGigs();
 
+		return ResponseEntity.status(HttpStatus.OK).body(gigs);
+	}
+	@GetMapping("/findFreelancerId/{gigsId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
+	public ResponseEntity<?> findFreelancerIdByGigsId(@PathVariable Long gigsId) {
+		Long fid=buyerService.findFreelancerById(gigsId);
+		return ResponseEntity.status(HttpStatus.OK).body(fid);
+	}
+
+	@GetMapping("/findFreelancerByReviewId/{buyerId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
+	public ResponseEntity<?> findFreelancerIdByReviewId(@PathVariable Long buyerId) {
+		List<Long> freelancerId=buyerService.findFreelancerByBuyerId(buyerId);
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerId);
+	}
+	
+	@GetMapping("/findFreelancerByOrderId/{orderId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER', 'ROLE_BUYER')")	
+	public ResponseEntity<?> findFreelancerIdByOrderId(@PathVariable Long orderId) {
+		Long freelancerId=buyerService.findFreelancerByOrderId(orderId);
+		return ResponseEntity.status(HttpStatus.OK).body(freelancerId);
+	}
 }

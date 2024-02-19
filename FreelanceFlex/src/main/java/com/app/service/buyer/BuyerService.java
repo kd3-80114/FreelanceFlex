@@ -44,4 +44,12 @@ public interface BuyerService {
 
 	List<PaymentDTO> getAllPayments(Long buyerId);
 
+	List<Gigs> getEveryGigs();
+
+	Long findFreelancerById(Long gigsId);
+
+	List<Long> findFreelancerByBuyerId(Long buyerId);
+
+	Long findFreelancerByOrderId(Long orderId);
+
 }

@@ -1,0 +1,61 @@
+/* FreelancerHome.css */
+
+/* Custom styles for the Freelancer Home page */
+
+/* Styling the container */
+.container {
+    max-width: 960px;
+  }
+  
+  /* Adding margin to the top */
+  .mt-4 {
+    margin-top: 1.5rem;
+  }
+  
+  /* Styling the card */
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling the card title */
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Styling the card text */
+  .card-text {
+    color: #555;
+  }
+  
+  /* Styling the sign up button */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+
+.bg-Image{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+
+}
+
+.bg-Image::after{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55); 
+}
