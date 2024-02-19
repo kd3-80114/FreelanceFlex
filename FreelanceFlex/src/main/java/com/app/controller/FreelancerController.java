@@ -131,6 +131,7 @@ public class FreelancerController {
 	@GetMapping("/viewOrders/{freelancerId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FREELANCER')")
 	public ResponseEntity<?> viewOrders(@PathVariable Long freelancerId){
+		System.out.println("in freelancer ViewOrder");
 		List<Orders> finalOrderList =	freelancerService.getOrderDetails(freelancerId);
 		if (finalOrderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -157,15 +158,15 @@ public class FreelancerController {
 				.body(freelancerService.uploadImage(freelancerId, image));
 	}
 	// uploadGigsImage
-		@PostMapping(value = "/gigs/images/{freelancerId}/{gigsid}", consumes = "multipart/form-data")
+		@PostMapping(value = "/gigs/images/{freelancerId}/{gigsId}", consumes = "multipart/form-data")
 				@PreAuthorize("hasRole('ROLE_FREELANCER')")
-		public ResponseEntity<?> uploadGigImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image,@PathVariable int gigsid)
+		public ResponseEntity<?> uploadGigImage(@PathVariable Long freelancerId, @RequestParam MultipartFile image,@PathVariable int gigsId)
 				throws IOException {
 			System.out.println("In upload image " + freelancerId);
-			System.out.println("In upload image " + gigsid);
+			System.out.println("In upload image " + gigsId);
 			System.out.println(image);
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(freelancerService.uploadGigsImage(freelancerId, image,gigsid));
+					.body(freelancerService.uploadGigsImage(freelancerId, image,gigsId));	
 		}
 		
 		@PreAuthorize("hasRole('ROLE_FREELANCER')")

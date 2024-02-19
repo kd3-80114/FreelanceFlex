@@ -11,7 +11,7 @@ export function Creategig() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState();
     var id=user.id;
     const navigate = useNavigate()
 
@@ -86,7 +86,7 @@ export function Creategig() {
                                 />
                             </div>
 
-                            <Uploadimage id={id}></Uploadimage>
+                            
 
                            
  
