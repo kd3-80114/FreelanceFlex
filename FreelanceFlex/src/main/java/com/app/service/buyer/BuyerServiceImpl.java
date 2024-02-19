@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -274,6 +275,7 @@ public class BuyerServiceImpl implements BuyerService {
 		// List<Orders> finalOrderList = new ArrayList<>();
 		// List<Orders> orderList = orderDao.findAll();
 		List<Orders> finalOrderList = orderDao.findAllOrderByBuyerId(buyerId);
+		System.out.println(finalOrderList);
 
 		return finalOrderList;
 	}
@@ -283,4 +285,35 @@ public class BuyerServiceImpl implements BuyerService {
 		List<Gigs> listOfGigs = gigDao.findByFreelancerId(freelancerId);
 		return listOfGigs;
 	}
+
+	@Override
+	public List<Gigs> getEveryGigs() {
+		List<Gigs> allGigs= gigDao.findAll();
+		
+		return allGigs;
+	}
+
+	@Override
+	public Long findFreelancerById(Long gigsId) {
+		Long fid =gigDao.findFreelancerById(gigsId);
+		System.out.println("fid==="+fid);
+		return fid;
+	}
+
+	@Override
+	public List<Long> findFreelancerByBuyerId(Long buyerId) {
+		List<Long> fid =reviewDao.findFreelancerIdsByBuyerId(buyerId);
+		System.out.println("fid==="+fid.size());
+		return fid;
+	}
+
+	@Override
+	public Long findFreelancerByOrderId(Long orderId) {
+		Freelancer freelancer  = orderDao.findFreelancerByOrderId(orderId).get();
+		System.out.println(freelancer.getId());
+		return freelancer.getId();
+	}
+	
+	
+	
 }

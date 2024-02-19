@@ -16,7 +16,7 @@ export function FreelancerHome() {
         <Col>
           {/* Container with welcoming message style */}
           <div className="bg-light p-5 rounded">
-            <h1 className="display-4">Welcome to the Freelance Marketplace!</h1>
+            <h1 className="display-4">Welcome to the FreelanceFlex</h1>
             <p className="lead">
               Explore a wide range of freelancers and find the perfect talent for your projects.
             </p>

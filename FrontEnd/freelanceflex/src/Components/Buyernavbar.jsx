@@ -20,7 +20,9 @@ export function Buyernavbar() {
 
     if (result.status==200) {
         console.log(result.data)
-      sessionStorage['BuyerReviews'] = JSON.stringify(result.data)
+      // sessionStorage['BuyerReviews'] = JSON.stringify(result.data)
+      navigate('/buyer/viewReviews', {state:{reviews : result.data}})
+      // navigate('/buyer/confirmorder',{state:{freelancerid: fid,gigtoforward:gig}});
         } else {
       toast.warn("Please try again later")
     }
@@ -30,8 +32,8 @@ export function Buyernavbar() {
     <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
   <div className='container-fluid'>
     {/* Logo */}
-    <Link className='navbar-brand' to='/'>
-      Your Logo
+    <Link className='navbar-brand' to='/buyer/buyerhome'>
+      FreelanceFlex
     </Link>
 
     {/* Navbar toggler for mobile */}
@@ -57,7 +59,7 @@ export function Buyernavbar() {
     <Link className='nav-link' aria-current='page' to='/'>
 
       </Link>
-    <NavDropdown title="Order" id="orders-dropdown">
+    <NavDropdown title="Order"  id="orders-dropdown">
       {/* Add your Gigs dropdown items here */}
       <NavDropdown.Item href='/buyer/placeorder'>Place Order</NavDropdown.Item>
       <NavDropdown.Item href='/buyer/vieworders'>View Orders</NavDropdown.Item>
@@ -65,9 +67,9 @@ export function Buyernavbar() {
     </NavDropdown>
     <NavDropdown title="Review" id="reviews-dropdown">
       {/* Add your Gigs dropdown items here */}
-      <NavDropdown.Item href='/buyer/createreview'>Create Review</NavDropdown.Item>
+      <NavDropdown.Item href='/buyer/vieworders'>Create Review</NavDropdown.Item>
       {/* <NavDropdown.Item href='/buyer/viewreviews' onClick={viewReviews}>View Reviews</NavDropdown.Item> */}
-      <NavDropdown.Item href='/buyer/viewReviews' onClick={viewReviews}>View Reviews</NavDropdown.Item>
+      <NavDropdown.Item href='#' onClick={viewReviews}>View Reviews</NavDropdown.Item>
       {/* Add more items as needed */}
     </NavDropdown>
     <Link className='nav-link' aria-current='page' to='/buyer/viewProfile'>
